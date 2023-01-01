@@ -1,0 +1,15 @@
+{
+  "name": "dsm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve:client": "pnpm --filter client dev",
+    "serve:server": "pnpm --filter server start:dev",
+    "build:client": "pnpm --filter client build",
+    "build:server": "pnpm --filter server build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

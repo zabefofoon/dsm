@@ -1,0 +1,40 @@
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  background-color: currentColor;
+}
+
+.icon-grid {
+  -webkit-mask-image: url(https://api.iconify.design/material-symbols/grid-view.svg);
+  mask-image: url(https://api.iconify.design/material-symbols/grid-view.svg);
+}
+
+.icon-explore {
+  -webkit-mask-image: url(https://api.iconify.design/ic/outline-explore.svg);
+  mask-image: url(https://api.iconify.design/ic/outline-explore.svg);
+}
+
+.icon-file {
+  -webkit-mask-image: url(https://api.iconify.design/arcticons/atomic-science.svg);
+  mask-image: url(https://api.iconify.design/arcticons/atomic-science.svg);
+}
+
+.icon-add {
+  -webkit-mask-image: url(https://api.iconify.design/material-symbols/add.svg);
+  mask-image: url(https://api.iconify.design/material-symbols/add.svg);
+}
+
+.icon-delete {
+  -webkit-mask-image: url(https://api.iconify.design/material-symbols/delete-outline.svg);
+  mask-image: url(https://api.iconify.design/material-symbols/delete-outline.svg);
+}
+
+.icon-overflow {
+  -webkit-mask-image: url(https://api.iconify.design/carbon/overflow-menu-vertical.svg);
+  mask-image: url(https://api.iconify.design/carbon/overflow-menu-vertical.svg);
+}
