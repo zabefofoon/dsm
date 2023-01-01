@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import {Project} from "../../model/Project"
+import {ProjectType} from "../../server/model/ProjectType"
 import {definePageMeta, ref} from "#imports"
 import {default as ProjectComponent} from "../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
@@ -39,7 +39,7 @@ definePageMeta({
   middleware: 'seo'
 })
 
-const projects = ref<Project[]>(Array(15).fill({
+const projects = ref<ProjectType[]>(Array(15).fill({
   id: '1',
   name: 'project1',
   modified: '2022-12-28',
@@ -58,7 +58,7 @@ const isShowContextmenu = ref<ContextMenuData>({
   x: 0,
   y: 0
 })
-const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: Project) => {
+const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: ProjectType) => {
   isShowContextmenu.value = {
     show: !!project?.id,
     x: clientX,

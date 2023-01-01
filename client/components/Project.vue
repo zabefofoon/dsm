@@ -35,11 +35,11 @@
 
 <script setup lang="ts">
 import {PropType} from 'vue'
-import {Project} from "../../model/Project"
+import {ProjectType} from "../../server/model/ProjectType"
 import {directive as vClickAway} from "vue3-click-away"
 
 defineProps({
-  project: Object as PropType<Project>
+  project: Object as PropType<ProjectType>
 })
 
 const isShowMenu = ref(false)
