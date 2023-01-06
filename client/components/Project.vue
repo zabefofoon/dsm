@@ -10,10 +10,10 @@
       <ul class="bg-white border shadow-sm  text-sm w-40"
           v-click-away="() => toggleMenu()">
         <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y">
-          <button>config</button>
+          <button @click="$emit('config')">config</button>
         </li>
         <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y">
-          <button>delete</button>
+          <button @click="$emit('delete')">delete</button>
         </li>
       </ul>
     </div>
