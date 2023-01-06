@@ -33,6 +33,7 @@ import {ProjectType} from "../../server/model/ProjectType"
 import {definePageMeta, ref} from "#imports"
 import {default as ProjectComponent} from "../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
+import {useNavigationStore} from "~/stores/navigation"
 
 definePageMeta({
   layout: 'editor',
@@ -66,6 +67,9 @@ const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: ProjectType
     id: project?.id
   }
 }
+
+const navigationStore = useNavigationStore()
+navigationStore.showBackButton(false)
 </script>
 
 <style scoped lang="scss">

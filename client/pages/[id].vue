@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import {onMounted, ref, useState} from "#imports"
 import {SeoData} from "~/middleware/seo"
+import {useNavigationStore} from "~/stores/navigation"
 
 definePageMeta({
   layout: 'editor',
@@ -321,6 +322,9 @@ const postGroups = () => setTimeout(() => iframe.value
 
 const loadGroups = () => postGroups()
 onMounted(() => postGroups())
+
+const navigationStore = useNavigationStore()
+navigationStore.showBackButton({href: '/'})
 </script>
 
 <style scoped>
