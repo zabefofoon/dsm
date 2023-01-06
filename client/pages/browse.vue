@@ -4,6 +4,7 @@ browse
 
 <script setup lang="ts">
 import {useNavigationStore} from "~/stores/navigation"
+import {definePageMeta} from "#imports"
 
 definePageMeta({
   layout: 'editor',

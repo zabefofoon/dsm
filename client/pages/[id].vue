@@ -9,6 +9,7 @@
 import {onMounted, ref, useState} from "#imports"
 import {SeoData} from "~/middleware/seo"
 import {useNavigationStore} from "~/stores/navigation"
+import {definePageMeta} from "#imports"
 
 definePageMeta({
   layout: 'editor',

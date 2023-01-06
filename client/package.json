@@ -16,6 +16,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
     "axios": "^1.2.2",
-    "vue3-click-away": "^1.2.4"
+    "vue3-click-away": "^1.2.4",
+    "vue-router": "^4.1.6"
   }
 }
