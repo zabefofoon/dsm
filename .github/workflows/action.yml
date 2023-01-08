@@ -17,4 +17,6 @@ jobs:
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            ls -a
+            cd dsm
+            git pull master
+            docker-compose up --build
