@@ -22,4 +22,4 @@ jobs:
           script: |
             cd dsm
             git pull master
-            docker-compose up --build
+            docker-compose up --build -d

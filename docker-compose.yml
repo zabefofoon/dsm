@@ -8,7 +8,7 @@ services:
       target: build
     ports:
       - 3000:3000
-    command: node .output/server/index.mjs
+    command: node .output/server/index.mjs &
   server:
     image: dsm-server
     build:
@@ -17,4 +17,4 @@ services:
       target: build
     ports:
       - 3001:3001
-    command: node dist/src/main
+    command: node dist/src/main &
