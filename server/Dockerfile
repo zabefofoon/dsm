@@ -9,6 +9,7 @@ RUN pnpm install
 FROM base AS build
 WORKDIR /app
 COPY --from=install /app .
+COPY .env /
 RUN pnpm build
 
 EXPOSE 3001
