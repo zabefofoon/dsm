@@ -12,11 +12,13 @@ importers:
       axios: ^1.2.2
       nuxt: 3.0.0
       sass: ^1.57.1
+      vue-final-modal: ^3.4.11
       vue-router: ^4.1.6
       vue3-click-away: ^1.2.4
     dependencies:
       '@pinia/nuxt': 0.4.6_rollup@2.79.1+vue@3.2.45
       axios: 1.2.2
+      vue-final-modal: 3.4.11
       vue-router: 4.1.6_vue@3.2.45
       vue3-click-away: 1.2.4
     devDependencies:
@@ -8502,6 +8504,10 @@ packages:
   /vue-devtools-stub/0.1.0:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
     dev: true
+
+  /vue-final-modal/3.4.11:
+    resolution: {integrity: sha512-tKBM4hcUo16rUGa/UaYMlut11cRfxMZnahz9u+mAoSk8mQNdnm9FHzOeHIcUxNHvMC/YyVBlOHi+2GqOVO8zig==}
+    dev: false
 
   /vue-router/4.1.6_vue@3.2.45:
     resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}

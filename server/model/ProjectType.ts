@@ -2,10 +2,7 @@ export interface ProjectType {
   id: string
 
   name: string
-  thumbnail?: string
+  isPrivate: boolean
 
-  private?: boolean
-
-  modified: string
-  created: string
+  modified: Date
 }

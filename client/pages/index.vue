@@ -25,7 +25,7 @@
       </ul>
       <button class="self-center justify-self-center w-40 aspect-square
           border border-dashed flex flex-col items-center justify-center"
-              @click="createProject">
+              @click="showModalConfigProject">
         <span class="w-fit h-fit text-3xl text-slate-500">
           <i class="icon icon-add"></i>
         </span>
@@ -43,6 +43,8 @@ import {directive as vClickAway} from "vue3-click-away"
 import {useNavigationStore} from "~/stores/navigation"
 import projectApi from "~/api/project/projectApi"
 import {config} from "~/config/config"
+import {$vfm} from 'vue-final-modal'
+import ModalAddProject from "../components/ModalAddProject.vue"
 
 definePageMeta({
   layout: 'editor',
@@ -83,8 +85,8 @@ navigationStore.showBackButton(false)
 const {data} = useAsyncData(() => $fetch(`${config.apiUrl}/projects`))
 console.log(data.value)
 
-const createProject = async () => {
-  const response = await projectApi.createProject()
+const createProject = async (data: Partial<ProjectType>) => {
+  const response = await projectApi.createProject(data)
   console.log(response)
 }
 
@@ -96,6 +98,19 @@ const updateProject = async () => {
 const deleteProjects = async () => {
   const response = await projectApi.deleteProjects(['id'])
   console.log(response)
+}
+
+const showModalConfigProject = async (): Promise<void> => {
+  await $vfm.show({
+    component: ModalAddProject,
+    on: {
+      create: (data: Partial<ProjectType>, close: () => void) => {
+        createProject(data)
+        close()
+      },
+      cancel: (close: () => void) => close()
+    }
+  })
 }
 </script>
 

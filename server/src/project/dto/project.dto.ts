@@ -1,4 +1,4 @@
-import {IsDate} from 'class-validator';
+import {IsBoolean, IsDate, IsNotEmpty, IsOptional} from 'class-validator';
 import {Type} from 'class-transformer';
 
 import {ProjectType} from '../../../model/ProjectType';
@@ -6,15 +6,14 @@ import {ProjectType} from '../../../model/ProjectType';
 export class ProjectDto implements ProjectType {
   id: string
 
+  @IsNotEmpty()
   name: string
-  thumbnail: string
 
-  private: boolean
+  @IsOptional()
+  @IsBoolean()
+  isPrivate: boolean
 
   @Type(() => Date)
   @IsDate()
-  modified: string
-  @Type(() => Date)
-  @IsDate()
-  created: string
+  modified: Date
 }
