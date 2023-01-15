@@ -6,8 +6,8 @@ export default {
 
   getProject: (id: string) => apiClient.get(`/projects/${id}`),
 
-  createProject: ({name, isPrivate}: Partial<ProjectType>) => apiClient
-      .post(`/projects`, {name, isPrivate}),
+  createProject: ({name, isPrivate, username}: Partial<ProjectType>) => apiClient
+      .post(`/projects`, {name, isPrivate, username}),
 
   updateProject: (id: string) => apiClient.put(`/projects/${id}`),
 

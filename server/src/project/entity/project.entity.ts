@@ -14,4 +14,7 @@ export class ProjectEntity extends BaseEntity implements ProjectType{
 
   @Column()
   modified: Date
+
+  @Column()
+  username: string
 }

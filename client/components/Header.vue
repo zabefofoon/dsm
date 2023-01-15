@@ -1,5 +1,5 @@
 <template>
-  <header class="p-3 border flex gap-4 items-center">
+  <header class="py-2 pl-4 pr-8 border flex gap-4 items-center">
     <figure class="flex items-center">
       <button v-show="isShowBackButton"
               class="flex items-center p-1"
@@ -14,6 +14,14 @@
     <h3 class="text-lg">
       {{ seoData?.displayTitle }}
     </h3>
+    <div class="ml-auto flex gap-3">
+      <button class="text-2xl text-slate-500">
+        <i class="icon icon-github"></i>
+      </button>
+      <button class="text-2xl text-slate-500">
+        <i class="icon icon-instargram"></i>
+      </button>
+    </div>
   </header>
 </template>
 

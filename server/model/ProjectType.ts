@@ -5,4 +5,6 @@ export interface ProjectType {
   isPrivate: boolean
 
   modified: Date
+
+  username: string
 }

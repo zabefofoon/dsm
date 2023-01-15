@@ -37,14 +37,16 @@
 
 <script setup lang="ts">
 import {ProjectType} from "../../server/model/ProjectType"
-import {definePageMeta, ref, useAsyncData} from "#imports"
+import {definePageMeta, onMounted, ref} from "#imports"
 import {default as ProjectComponent} from "../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
 import {useNavigationStore} from "~/stores/navigation"
 import projectApi from "~/api/project/projectApi"
-import {config} from "~/config/config"
 import {$vfm} from 'vue-final-modal'
 import ModalAddProject from "../components/ModalAddProject.vue"
+import {useAuthStore} from "~/stores/auth"
+
+const authStore = useAuthStore()
 
 definePageMeta({
   layout: 'editor',
@@ -82,11 +84,22 @@ const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: ProjectType
 const navigationStore = useNavigationStore()
 navigationStore.showBackButton(false)
 
-const {data} = useAsyncData(() => $fetch(`${config.apiUrl}/projects`))
-console.log(data.value)
+/*const {data} = useAsyncData(() => $fetch(`${config.apiUrl}/projects`, {credentials: 'include'}))
+console.log(data.value)*/
+
+onMounted(() => {
+  getAllProjects()
+})
+
+const getAllProjects = async () => {
+  const response = await projectApi.getAllProjects()
+  console.log(response)
+}
 
 const createProject = async (data: Partial<ProjectType>) => {
-  const response = await projectApi.createProject(data)
+  const _data = data
+  _data.username = authStore.name
+  const response = await projectApi.createProject(_data)
   console.log(response)
 }
 

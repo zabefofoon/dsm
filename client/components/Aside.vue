@@ -1,5 +1,17 @@
 <template>
   <nav class="flex flex-col gap-2 w-auto p-2 border shrink-0">
+    <NuxtLink v-if="!username"
+              to="/sign">
+      <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
+        <i class="icon icon-avatar-unsecured"></i>
+      </button>
+    </NuxtLink>
+    <button v-else
+            class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400"
+            @click="signOut">
+      <i class="icon icon-avatar-secured"></i>
+    </button>
+    <div class="border"></div>
     <NuxtLink to="/">
       <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
         <i class="icon icon-grid"></i>
@@ -13,6 +25,21 @@
   </nav>
 </template>
 <script setup lang="ts">
+import {useAuthStore} from "~/stores/auth"
+import {computed, useRouter} from "#imports"
+import authApi from "~/api/auth/authApi"
+
+const router = useRouter()
+const authStore = useAuthStore()
+const username = computed(() => authStore.name)
+
+const signOut = async () => {
+  const result = confirm('Do you want to sign out?')
+  if (!result) return
+  await authApi.signOut()
+  await router.push('/sign')
+  authStore.name = ''
+}
 
 </script>
 

@@ -16,4 +16,7 @@ export class ProjectDto implements ProjectType {
   @Type(() => Date)
   @IsDate()
   modified: Date
+
+  @IsNotEmpty()
+  username: string
 }

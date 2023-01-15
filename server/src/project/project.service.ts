@@ -21,10 +21,11 @@ export class ProjectService {
     return `id: ${id}`
   }
 
-  async createProject(projectDto: ProjectDto): Promise<ProjectEntity> {
+  async createProject({name, isPrivate, username}: ProjectDto): Promise<ProjectEntity> {
     const project = this.projectRepository.create({
-      name: projectDto.name,
-      isPrivate: projectDto.isPrivate,
+      name,
+      isPrivate,
+      username,
       modified: new Date()
     })
     await this.projectRepository.save(project)

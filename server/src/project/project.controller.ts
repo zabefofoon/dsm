@@ -1,16 +1,19 @@
-import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards} from '@nestjs/common';
 import {ProjectService} from "./project.service"
 import {strToArr} from "../../util/util"
 import {ProjectDto} from "./dto/project.dto"
+import {Request} from "express"
+import {AuthGuard} from "../auth/auth.guard"
 
 @Controller('projects')
+@UseGuards(AuthGuard)
 export class ProjectController {
 
   constructor(private projectService: ProjectService) {
   }
 
   @Get()
-  getAllProjects(): string {
+  getAllProjects(@Req() req: Request): string {
     return this.projectService.getAllProjects()
   }
 
@@ -26,7 +29,8 @@ export class ProjectController {
 
   @Put('/:id')
   updateProject(@Param('id') id: string,
-                @Body() project: ProjectDto) {
+                @Body() project: ProjectDto,
+                @Req() req: Request) {
     return this.projectService.updateProject(id, project)
   }
 
