@@ -4,7 +4,7 @@ import {ProjectType} from "~/../server/model/ProjectType"
 import projectApi from "~/api/project/projectApi"
 
 export const useMyProjectsStore = defineStore('myProjects', () => {
-  const myProjects = ref<ProjectType[]>([])
+  const myProjects = ref<ProjectType[]>()
 
   const meta = ref<PaginationMeta>()
 
@@ -14,7 +14,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     if ((meta.value?.currentPage || 0) >= page) return
     const res = await projectApi.getAllProjects(page, limit)
     meta.value = res.data.meta
-    myProjects.value = [...myProjects.value, ...res.data.items]
+    myProjects.value = [...myProjects.value || [], ...res.data.items]
   }
 
   const getNextPage = async () => {
@@ -23,7 +23,8 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
 
   const createProject = async (data: Partial<ProjectType>) => {
     const response = await projectApi.createProject(data)
-    myProjects.value.unshift(response.data)
+    if (!myProjects.value) myProjects.value = []
+      myProjects.value.unshift(response.data)
   }
 
   const updateProject = async (id: string, data: Partial<ProjectType>) => {
@@ -38,7 +39,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
   const deleteProjects = async (ids: string[]) => {
     await projectApi.deleteProjects(ids)
     ids.forEach((id) => {
-      myProjects.value = myProjects.value.filter((project) => project.id !== id)
+      myProjects.value = myProjects.value?.filter((project) => project.id !== id)
     })
   }
 
@@ -46,7 +47,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     myProjects.value = []
   }
 
-  const findProjectById = (id: string) => myProjects.value.find((project) => project.id === id)
+  const findProjectById = (id: string) => myProjects.value?.find((project) => project.id === id)
 
   return {
     myProjects,
@@ -57,7 +58,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     createProject,
     updateProject,
     deleteProjects,
-    findProjectById,
-    emptyMyProjects
+    emptyMyProjects,
+    findProjectById
   }
 })

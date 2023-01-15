@@ -1,28 +1,37 @@
 <template>
   <div class="h-full">
     <div class="p-4 flex flex-wrap gap-4">
-      <button class="self-center justify-self-center w-40 aspect-square
+      <template v-if="myProjects">
+        <button class="self-center justify-self-center w-40 aspect-square
           border border-dashed flex flex-col items-center justify-center"
-              @click="showModalConfigProject">
+                @click="showAddProjectModal(undefined, myProjectStore.createProject)">
         <span class="w-fit h-fit text-3xl text-slate-500">
           <i class="icon icon-add"></i>
         </span>
-        <span class="text-slate-500 text-sm">New Project</span>
-      </button>
-      <div v-for="project in myProjects"
-           :key="project.id"
-           @contextmenu.prevent="toggleContextmenu($event, project)">
-        <ProjectComponent :project="project"
-                          @config="showModalConfigProject2(project.id)"
-                          @delete="deleteProjects(project.id)"/>
-      </div>
+          <span class="text-slate-500 text-sm">New Project</span>
+        </button>
+        <div v-for="project in myProjects"
+             :key="project.id"
+             @contextmenu.prevent="toggleContextmenu($event, project)">
+          <ProjectComponent :project="project"
+                            @config="updateProject(project.id)"
+                            @delete="deleteProjects(project.id)"/>
+        </div>
+      </template>
+      <template v-else>
+        <ProjectSkeletor v-for="index in 3"
+                         :key="index"
+                         width="160px"
+                         height="230px"/>
+      </template>
+
       <ul v-if="isShowContextmenu.show"
           class="fixed bg-white border w-48 z-10 shadow-md text-sm"
           :style="{top: `${isShowContextmenu.y}px`, left: `${isShowContextmenu.x}px`}"
           v-click-away="($event) => toggleContextmenu($event)">
         <li class="py-1 px-2 hover:bg-slate-500 hover:text-white">
           <button class="w-full text-left"
-                  @click="showModalConfigProject2(isShowContextmenu.id, $event)">config
+                  @click="updateProject(isShowContextmenu.id, $event)">config
           </button>
         </li>
         <li class="py-1 px-2 border divide-y hover:bg-slate-500 hover:text-white">
@@ -86,42 +95,24 @@ onMounted(() => {
   myProjectStore.getMyProjects(1)
 })
 
-const createProject = async (data: Partial<ProjectType>) => {
-  myProjectStore.createProject(data)
-}
-
-const updateProject = async (id: string, data: Partial<ProjectType>) => {
-  await myProjectStore.updateProject(id, data)
-}
-
 const deleteProjects = async (id: string, $event: MouseEvent) => {
   toggleContextmenu($event)
   await myProjectStore.deleteProjects([id])
 }
 
-const showModalConfigProject2 = async (id: string, $event: MouseEvent): Promise<void> => {
+const updateProject = (id: string, $event: MouseEvent) => {
   toggleContextmenu($event)
-  await $vfm.show({
-    component: ModalAddProject,
-    bind: {
-      project: myProjectStore.findProjectById(id)
-    },
-    on: {
-      create: (data: Partial<ProjectType>, close: () => void) => {
-        updateProject(id, data)
-        close()
-      },
-      cancel: (close: () => void) => close()
-    }
-  })
+  showAddProjectModal(myProjectStore.findProjectById(id), (data) => myProjectStore.updateProject(id, data))
 }
 
-const showModalConfigProject = async (): Promise<void> => {
+const showAddProjectModal = async (project: ProjectType | undefined,
+                                   cb: (data: Partial<ProjectType>) => unknown) => {
   await $vfm.show({
     component: ModalAddProject,
+    bind: {project},
     on: {
       create: (data: Partial<ProjectType>, close: () => void) => {
-        createProject(data)
+        cb(data)
         close()
       },
       cancel: (close: () => void) => close()

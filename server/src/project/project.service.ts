@@ -42,9 +42,11 @@ export class ProjectService {
     await this.projectRepository.delete(ids)
   }
 
-  async paginate(options: IPaginationOptions): Promise<Pagination<ProjectEntity>> {
+  async paginate(options: IPaginationOptions, onlyPublic = false): Promise<Pagination<ProjectEntity>> {
     const queryBuilder = this.projectRepository.createQueryBuilder('c');
     queryBuilder.orderBy('c.modified', 'DESC'); // Or whatever you need to do
+    if (onlyPublic)
+      queryBuilder.where('c.isPrivate = :isPrivate', {isPrivate: false})
     return paginate<ProjectEntity>(queryBuilder, options);
   }
 

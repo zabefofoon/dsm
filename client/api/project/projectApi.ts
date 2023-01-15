@@ -19,5 +19,12 @@ export default {
   createProjectDetail: (id: string) => apiClient.post(`/projects/detail/${id}`),
 
   updateProjectDetail: (id: string, data: string) => apiClient
-      .put(`/projects/detail/${id}`, {data})
+      .put(`/projects/detail/${id}`, {data}),
+
+  getAllPublicProjects: async (page: number, limit?: number): Promise<AxiosResponse<Pagination<ProjectType>>> => await apiClient.get('/projects/public', {
+    params: {page, limit}
+  }),
+
+  getPublicProjectDetail: async (id: string) => await apiClient
+      .get(`/projects/public/${id}`),
 }

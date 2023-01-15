@@ -17,7 +17,7 @@
         </li>
       </ul>
     </div>
-    <NuxtLink :to="`/${project.id}`">
+    <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
       <div class="relative card border shadow-md w-40">
         <div v-if="project.isPrivate"
              class="absolute top-0 right-0 p-2">
@@ -43,7 +43,8 @@ import {ProjectType} from "../../server/model/ProjectType"
 import {directive as vClickAway} from "vue3-click-away"
 
 defineProps({
-  project: Object as PropType<ProjectType>
+  project: Object as PropType<ProjectType>,
+  public: Boolean
 })
 
 const isShowMenu = ref(false)
