@@ -28,17 +28,20 @@
 import {useAuthStore} from "~/stores/auth"
 import {computed, useRouter} from "#imports"
 import authApi from "~/api/auth/authApi"
+import {useMyProjectsStore} from "~/stores/myProjects"
 
 const router = useRouter()
 const authStore = useAuthStore()
-const username = computed(() => authStore.name)
+const myProjectsStore = useMyProjectsStore()
+const username = computed(() => authStore.username)
 
 const signOut = async () => {
   const result = confirm('Do you want to sign out?')
   if (!result) return
   await authApi.signOut()
-  await router.push('/sign')
-  authStore.name = ''
+  myProjectsStore.emptyMyProjects()
+  authStore.setName('')
+  location.reload()
 }
 
 </script>

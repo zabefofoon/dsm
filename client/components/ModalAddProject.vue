@@ -57,14 +57,18 @@
 
 <script setup lang="ts">
 import {VueFinalModal} from 'vue-final-modal'
-import {ref} from "vue"
+import {ref, PropType} from "vue"
 import {ProjectType} from "../../server/model/ProjectType"
 
-const emit = defineEmits(['create', 'cencel'])
+const props = defineProps({
+  project: Object as PropType<ProjectType>
+})
+
+const emit = defineEmits(['create', 'cancel'])
 
 const dataForRequest = ref<Partial<ProjectType>>({
-  isPrivate: false,
-  name: 'New Project'
+  isPrivate: props.project?.isPrivate || false,
+  name: props.project?.name || 'New Project'
 })
 
 const isInvalid = ref(false)

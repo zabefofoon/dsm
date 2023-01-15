@@ -1,7 +1,6 @@
 import {CanActivate, ExecutionContext, Inject, Injectable} from '@nestjs/common';
 import {JwtService} from "@nestjs/jwt"
 import {AuthService} from "./auth.service"
-import {getDateAfterMinute} from "../../util/util"
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,13 +15,14 @@ export class AuthGuard implements CanActivate {
     const res = context.switchToHttp().getResponse()
     const accessToken = req.cookies['Authentication']
     const decodedAccessToken = this.jwtService.decode(accessToken)
-    const isAccessTokenExpired = decodedAccessToken?.['exp'] < new Date().getTime() / 1000
+    const isAccessTokenExpired = !decodedAccessToken || (decodedAccessToken?.['exp'] < new Date().getTime() / 1000)
+
     if (isAccessTokenExpired) {
       const createdAccessToken = await this.authService.refresh(decodedAccessToken['name'])
       res.cookie('Authentication', createdAccessToken, {
         httpOnly: true,
         secure: false,
-        expires: getDateAfterMinute(30)
+        //expires: getDateAfterMinute(30)
       })
       return true
     }

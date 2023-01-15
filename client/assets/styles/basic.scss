@@ -76,3 +76,9 @@
   -webkit-mask-image: url($src);
   mask-image: url($src);
 }
+
+.icon-lock {
+  $src: 'https://api.iconify.design/material-symbols/lock-outline.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}

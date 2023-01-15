@@ -90,7 +90,7 @@ const signIn = async () => {
   setLoading(true)
   await authApi.signIn(authData.value).catch((e) => console.log(e))
   setLoading(false)
-  authStore.name = authData.value.name
+  authStore.setName(authData.value.name)
   await router.push('/')
 }
 

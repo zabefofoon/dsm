@@ -28,8 +28,7 @@ export class AuthController {
     const accessToken = result.accessToken
     res.cookie('Authentication', accessToken, {
       httpOnly: true,
-      secure: false,
-      expires: getDateAfterMinute(30)
+      secure: false
     })
   }
 

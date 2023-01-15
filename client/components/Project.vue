@@ -18,7 +18,11 @@
       </ul>
     </div>
     <NuxtLink :to="`/${project.id}`">
-      <div class="card border shadow-md w-40">
+      <div class="relative card border shadow-md w-40">
+        <div v-if="project.isPrivate"
+             class="absolute top-0 right-0 p-2">
+          <i class="icon icon-lock text-slate-400"></i>
+        </div>
         <div class="aspect-square flex items-center justify-center relative">
           <div class="w-fit h-fit text-8xl text-slate-500">
             <i class="icon icon-file"></i>
