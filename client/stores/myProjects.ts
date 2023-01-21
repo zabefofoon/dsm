@@ -29,7 +29,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
   const createProject = async (data: Partial<ProjectType>) => {
     const response = await projectApi.createProject(data)
     if (!myProjects.value) myProjects.value = []
-      myProjects.value.unshift(response.data)
+    myProjects.value.unshift(response.data)
   }
 
   const updateProject = async (id: string, data: Partial<ProjectType>) => {
@@ -50,6 +50,12 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
 
   const findProjectById = (id: string) => myProjects.value?.find((project) => project.id === id)
 
+  const refreshMyProjects = async () => {
+    const res = await projectApi.getAllProjects(1)
+    meta.value = res.data.meta
+    myProjects.value = res.data.items
+  }
+
   return {
     myProjects,
     meta,
@@ -60,6 +66,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     updateProject,
     deleteProjects,
     findProjectById,
-    clear
+    clear,
+    refreshMyProjects
   }
 })

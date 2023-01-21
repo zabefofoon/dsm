@@ -53,13 +53,21 @@ export class ProjectController {
   updateProject(@Param('id') id: string,
                 @Body() project: ProjectDto,
                 @Req() req: Request) {
-    project.modified = new Date()
     return this.projectService.updateProject(id, project)
   }
 
   @Delete('/:ids')
   deleteProjects(@Param('ids') ids: string): Promise<void> {
     return this.projectService.deleteProjects(strToArr(ids))
+  }
+
+  @Post('/:id/copy')
+  copyProject(@Param('id',) id: string,
+              @Req() req: Request) {
+    const accessToken = req.cookies['Authentication']
+    const decodedAccessToken = this.jwtService.decode(accessToken)
+    const username = decodedAccessToken['name']
+    return this.projectService.copyProject(id, username)
   }
 
   @Get('/detail/:id')
@@ -71,6 +79,7 @@ export class ProjectController {
   createProjectDetail(@Param('id') id: string): Promise<ProjectDetailEntity> {
     return this.projectService.createProjectDetail(id)
   }
+
 
   @Put('/detail/:id')
   updateProjectDetail(@Param('id') id: string,

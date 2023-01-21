@@ -8,7 +8,9 @@
           <ProjectComponent :project="project"
                             public>
             <template #menus>
-              <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer">
+              <li v-if="username"
+                  class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+                  @click="copy(project.id)">
                 <button>copy</button>
               </li>
             </template>
@@ -26,7 +28,9 @@
           class="fixed bg-white border w-48 z-10 shadow-md text-sm"
           :style="{top: `${isShowContextmenu.y}px`, left: `${isShowContextmenu.x}px`}"
           v-click-away="($event) => toggleContextmenu($event)">
-        <li class="py-1 px-2 hover:bg-slate-500 hover:text-white">
+        <li v-if="username"
+            class="py-1 px-2 hover:bg-slate-500 hover:text-white"
+            @click="copy(isShowContextmenu.id, $event)">
           <button class="w-full text-left">copy</button>
         </li>
       </ul>
@@ -46,6 +50,9 @@ import {directive as vClickAway} from "vue3-click-away"
 import {useNavigationStore} from "~/stores/navigation"
 import {storeToRefs} from "pinia"
 import {usePublicProjectsStore} from "~/stores/publicProjects"
+import projectApi from "~/api/project/projectApi"
+import {useMyProjectsStore} from "~/stores/myProjects"
+import {useAuthStore} from "~/stores/auth"
 
 
 definePageMeta({
@@ -65,7 +72,7 @@ const isShowContextmenu = ref<ContextMenuData>({
   x: 0,
   y: 0
 })
-const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: ProjectType) => {
+const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: Partial<ProjectType>) => {
   isShowContextmenu.value = {
     show: !!project?.id,
     x: clientX,
@@ -73,14 +80,25 @@ const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: ProjectType
     id: project?.id
   }
 }
+const authStore = useAuthStore()
+const {username} = storeToRefs(authStore)
+const myProjectStore = useMyProjectsStore()
 
 const navigationStore = useNavigationStore()
 navigationStore.showBackButton(false)
 
 const publicProjectStore = usePublicProjectsStore()
 const {isLastPage, publicProjects} = storeToRefs(publicProjectStore)
+
+const copy = async (projectId: string, $event?: MouseEvent) => {
+  if ($event) toggleContextmenu($event)
+  await projectApi.copyProject(projectId)
+  await myProjectStore.refreshMyProjects()
+  alert(`Copied the project. Check your project list.`)
+}
+
 onMounted(() => {
-  publicProjectStore.getPublicProjects(1)
+  publicProjectStore.refreshPublicProjects()
 })
 
 </script>

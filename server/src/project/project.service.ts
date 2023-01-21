@@ -17,15 +17,11 @@ export class ProjectService {
   ) {
   }
 
-  getAllProjects(): string {
-    return 'all projects'
-  }
-
   async getProject(projectId: string): Promise<ProjectEntity> {
     return await this.projectRepository.findOneBy({id: projectId})
   }
 
-  async createProject({name, isPrivate, username}: ProjectDto): Promise<ProjectEntity> {
+  async createProject({name, isPrivate, username}: Partial<ProjectDto>): Promise<ProjectEntity> {
     const project = this.projectRepository.create({
       name,
       isPrivate,
@@ -37,6 +33,7 @@ export class ProjectService {
   }
 
   async updateProject(id: string, project: ProjectDto): Promise<ProjectDto> {
+    project.modified = new Date()
     await this.projectRepository.update({id}, project)
     return project
   }
@@ -57,11 +54,20 @@ export class ProjectService {
     return paginate<ProjectEntity>(queryBuilder, options)
   }
 
+  async copyProject(id: string, username: string): Promise<void> {
+    const project = await this.getProject(id)
+    const name = `[Copy]${project.name}`
+    const isPrivate = true
+    const created = await this.createProject({name, isPrivate, username})
+    const projectDetail = await this.getProjectDetail(id)
+    await this.createProjectDetail(created.id, projectDetail?.data)
+  }
+
   async getProjectDetail(projectId: string): Promise<ProjectDetailEntity> {
     return this.projectDetailRepository.findOneBy({projectId})
   }
 
-  async createProjectDetail(projectId: string): Promise<ProjectDetailEntity> {
+  async createProjectDetail(projectId: string, data?: string): Promise<ProjectDetailEntity> {
     const projectDetail = await this.getProjectDetail(projectId)
     if (projectDetail) return projectDetail
     else {
@@ -75,7 +81,8 @@ export class ProjectService {
         isPrivate: project.isPrivate,
         modified: project.modified,
         username: project.username,
-        projectId
+        projectId,
+        data
       })
       await this.projectDetailRepository.save(projectDetail)
       return projectDetail

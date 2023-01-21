@@ -21,11 +21,18 @@ export const usePublicProjectsStore = defineStore('publicProjects', () => {
     if (!isLastPage.value) await getPublicProjects((meta.value?.currentPage || 0) + 1)
   }
 
+  const refreshPublicProjects = async () => {
+    const res = await projectApi.getAllPublicProjects(1)
+    meta.value = res.data.meta
+    publicProjects.value = res.data.items
+  }
+
   return {
     publicProjects,
     meta,
     isLastPage,
     getPublicProjects,
-    getNextPage
+    getNextPage,
+    refreshPublicProjects
   }
 })
