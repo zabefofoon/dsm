@@ -5,8 +5,13 @@ export const useAuthStore = defineStore('auth', () => {
   const setName = (value: string) => {
     username.value = value
   }
+
+  const clear = () => {
+    setName('')
+  }
   return {
     setName,
-    username
+    username,
+    clear
   }
 }, {persist: true})

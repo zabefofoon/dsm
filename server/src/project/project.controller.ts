@@ -34,7 +34,10 @@ export class ProjectController {
   getAllProjects(@Req() req: Request,
                  @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
                  @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number = 10,): Promise<Pagination<ProjectEntity>> {
-    return this.projectService.paginate({page, limit})
+    const accessToken = req.cookies['Authentication']
+    const decodedAccessToken = this.jwtService.decode(accessToken)
+    const username = decodedAccessToken['name']
+    return this.projectService.paginate({page, limit}, false, username)
   }
 
   @Post()
@@ -71,7 +74,7 @@ export class ProjectController {
 
   @Put('/detail/:id')
   updateProjectDetail(@Param('id') id: string,
-                      @Body() data: {data: string}): Promise<void> {
+                      @Body() data: { data: string }): Promise<void> {
     return this.projectService.updateProjectDetail(id, data.data)
   }
 

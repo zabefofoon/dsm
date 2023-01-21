@@ -10,6 +10,11 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
 
   const isLastPage = computed(() => ((meta.value?.totalPages || 0) - (meta.value?.currentPage || 0)) < 1)
 
+  const clear = () => {
+    myProjects.value = []
+    meta.value = undefined
+  }
+
   const getMyProjects = async (page: number, limit?: number) => {
     if ((meta.value?.currentPage || 0) >= page) return
     const res = await projectApi.getAllProjects(page, limit)
@@ -43,10 +48,6 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     })
   }
 
-  const emptyMyProjects = () => {
-    myProjects.value = []
-  }
-
   const findProjectById = (id: string) => myProjects.value?.find((project) => project.id === id)
 
   return {
@@ -58,7 +59,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     createProject,
     updateProject,
     deleteProjects,
-    emptyMyProjects,
-    findProjectById
+    findProjectById,
+    clear
   }
 })

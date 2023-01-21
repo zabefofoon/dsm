@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import {ProjectType} from "../../server/model/ProjectType"
-import {definePageMeta, onMounted, ref} from "#imports"
+import {definePageMeta, onMounted, ref, useRouter} from "#imports"
 import {default as ProjectComponent} from "../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
 import {useNavigationStore} from "~/stores/navigation"
@@ -58,7 +58,11 @@ import {$vfm} from 'vue-final-modal'
 import ModalAddProject from "../components/ModalAddProject.vue"
 import {useMyProjectsStore} from "~/stores/myProjects"
 import {storeToRefs} from "pinia"
+import {useAuthStore} from "~/stores/auth"
 
+const router = useRouter()
+
+const authStore = useAuthStore()
 
 definePageMeta({
   layout: 'editor',
@@ -92,6 +96,10 @@ navigationStore.showBackButton(false)
 const myProjectStore = useMyProjectsStore()
 const {isLastPage, myProjects} = storeToRefs(myProjectStore)
 onMounted(() => {
+  if (!authStore.username) {
+    alert('Only authorized users can use service.')
+    return router.push('sign')
+  }
   myProjectStore.getMyProjects(1)
 })
 

@@ -13,4 +13,9 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
     (response) => response,
-    async () => await useRouter().push('/sign'))
+    async (error) => {
+      if (error.response.status === 401
+          || error.response.status === 403)
+        await useRouter().push('/sign')
+      await Promise.reject(error)
+    })

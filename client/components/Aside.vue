@@ -12,7 +12,8 @@
       <i class="icon icon-avatar-secured"></i>
     </button>
     <div class="border"></div>
-    <NuxtLink to="/">
+    <NuxtLink v-if="username"
+              to="/">
       <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
         <i class="icon icon-grid"></i>
       </button>
@@ -26,22 +27,23 @@
 </template>
 <script setup lang="ts">
 import {useAuthStore} from "~/stores/auth"
-import {computed, useRouter} from "#imports"
+import {useRouter} from "#imports"
 import authApi from "~/api/auth/authApi"
 import {useMyProjectsStore} from "~/stores/myProjects"
+import {storeToRefs} from "pinia"
 
 const router = useRouter()
 const authStore = useAuthStore()
 const myProjectsStore = useMyProjectsStore()
-const username = computed(() => authStore.username)
+const {username} = storeToRefs(authStore)
 
 const signOut = async () => {
   const result = confirm('Do you want to sign out?')
   if (!result) return
   await authApi.signOut()
-  myProjectsStore.emptyMyProjects()
-  authStore.setName('')
-  location.reload()
+  myProjectsStore.clear()
+  authStore.clear()
+  await router.push('sign')
 }
 
 </script>

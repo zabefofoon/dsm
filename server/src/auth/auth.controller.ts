@@ -4,7 +4,6 @@ import {AuthCredentialsDto} from "./dto/authCredential.dto"
 import {AuthEntity} from "./entity/auth.entity"
 import {HttpExceptionFilter} from "../../filter/httpException.filter"
 import {Response} from "express"
-import {getDateAfterMinute} from "../../util/util"
 
 @Controller('auth')
 @UseFilters(new HttpExceptionFilter())
