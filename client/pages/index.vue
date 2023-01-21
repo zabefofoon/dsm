@@ -14,6 +14,7 @@
              :key="project.id"
              @contextmenu.prevent="toggleContextmenu($event, project)">
           <ProjectComponent :project="project"
+                            hide-username
                             @config="updateProject(project.id)"
                             @delete="deleteProjects(project.id)"/>
         </div>
@@ -103,13 +104,14 @@ onMounted(() => {
   myProjectStore.getMyProjects(1)
 })
 
-const deleteProjects = async (id: string, $event: MouseEvent) => {
-  toggleContextmenu($event)
+const deleteProjects = async (id: string, $event?: MouseEvent) => {
+  if ($event) toggleContextmenu($event)
+  if (!confirm('Are you sure you want to delete?')) return
   await myProjectStore.deleteProjects([id])
 }
 
-const updateProject = (id: string, $event: MouseEvent) => {
-  toggleContextmenu($event)
+const updateProject = (id: string, $event?: MouseEvent) => {
+  if ($event) toggleContextmenu($event)
   showAddProjectModal(myProjectStore.findProjectById(id), (data) => myProjectStore.updateProject(id, data))
 }
 

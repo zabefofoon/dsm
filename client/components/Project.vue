@@ -9,12 +9,16 @@
     <div v-if="isShowMenu" class="absolute top-8 left-3 z-10">
       <ul class="bg-white border shadow-sm  text-sm w-40"
           v-click-away="() => toggleMenu()">
-        <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y">
-          <button @click="$emit('config')">config</button>
-        </li>
-        <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y">
-          <button @click="$emit('delete')">delete</button>
-        </li>
+        <slot name="menus">
+          <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+              @click="select('config')">
+            <button>config</button>
+          </li>
+          <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+              @click="select('delete')">
+            <button>delete</button>
+          </li>
+        </slot>
       </ul>
     </div>
     <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
@@ -29,8 +33,10 @@
           </div>
         </div>
         <div class="flex flex-col gap-1 p-2 border border-x-0">
-          <input class="text-sm" :value="project.name"/>
-          <p class="text-xs">{{ project.modified }}</p>
+          <p class="text-xs text-slate-500">{{ formatDate(project.modified) }}</p>
+          <input class="text-sm text-slate-800"
+                 :value="project.name"/>
+          <p v-if="!hideUsername" class="text-xs text-slate-500">{{ project.username }}</p>
         </div>
       </div>
     </NuxtLink>
@@ -38,19 +44,30 @@
 </template>
 
 <script setup lang="ts">
-import {PropType} from 'vue'
+import {PropType, ref} from 'vue'
 import {ProjectType} from "../../server/model/ProjectType"
 import {directive as vClickAway} from "vue3-click-away"
+import util from "../util/util"
 
 defineProps({
   project: Object as PropType<ProjectType>,
-  public: Boolean
+  public: Boolean,
+  hideUsername: Boolean
 })
 
 const isShowMenu = ref(false)
 const toggleMenu = (value?: boolean) => {
   isShowMenu.value = value !== undefined ? value : !isShowMenu.value
 }
+
+const emit = defineEmits(['config', 'delete'])
+
+const select = (type: 'config' | 'delete') => {
+  toggleMenu()
+  emit(type)
+}
+
+const formatDate = util.formatDate
 
 </script>
 

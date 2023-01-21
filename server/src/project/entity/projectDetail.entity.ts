@@ -11,4 +11,16 @@ export class ProjectDetailEntity extends BaseEntity implements ProjectDetailType
 
   @Column()
   projectId: string
+
+  @Column()
+  name: string
+
+  @Column()
+  isPrivate: boolean
+
+  @Column()
+  modified: Date
+
+  @Column()
+  username: string
 }

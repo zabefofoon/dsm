@@ -45,6 +45,10 @@ onMounted(async () => {
   const projectDetail = await projectApi.createProjectDetail(String(route.params['id']))
   data.value = projectDetail.data.data ? projectDetail.data.data : '[]'
   window.addEventListener('message', updateProjectDetail)
+  seoData.value = {
+    pageTitle: `DSM - My Project > ${projectDetail.data.name}`,
+    displayTitle: `My project > ${projectDetail.data.name}`
+  }
   postGroups()
 })
 

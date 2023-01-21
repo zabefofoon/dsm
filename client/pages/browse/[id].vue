@@ -21,8 +21,8 @@ definePageMeta({
 
 const seoData = useState<SeoData>('seoData')
 seoData.value = {
-  pageTitle: 'DSM - My Project',
-  displayTitle: 'My project'
+  pageTitle: 'DSM - Browse',
+  displayTitle: 'Browse'
 }
 
 const data = ref<string>('[]')
@@ -38,6 +38,10 @@ const postGroups = () => setTimeout(() => iframe.value
 onMounted(async () => {
   const projectDetail = await projectApi.getPublicProjectDetail(String(route.params['id']))
   data.value = projectDetail.data.data ? projectDetail.data.data : '[]'
+  seoData.value = {
+    pageTitle: `DSM - Browse > ${projectDetail.data.name}`,
+    displayTitle: `Browse > ${projectDetail.data.name}`
+  }
   postGroups()
 })
 

@@ -6,7 +6,13 @@
              :key="project.id"
              @contextmenu.prevent="toggleContextmenu($event, project)">
           <ProjectComponent :project="project"
-                            public/>
+                            public>
+            <template #menus>
+              <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer">
+                <button>copy</button>
+              </li>
+            </template>
+          </ProjectComponent>
         </div>
       </template>
       <template v-else>
@@ -21,12 +27,7 @@
           :style="{top: `${isShowContextmenu.y}px`, left: `${isShowContextmenu.x}px`}"
           v-click-away="($event) => toggleContextmenu($event)">
         <li class="py-1 px-2 hover:bg-slate-500 hover:text-white">
-          <button class="w-full text-left">config
-          </button>
-        </li>
-        <li class="py-1 px-2 border divide-y hover:bg-slate-500 hover:text-white">
-          <button class="w-full text-left">delete
-          </button>
+          <button class="w-full text-left">copy</button>
         </li>
       </ul>
       <button v-if="!isLastPage"

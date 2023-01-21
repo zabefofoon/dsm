@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {ProjectDto} from "./dto/project.dto"
 import {InjectRepository} from "@nestjs/typeorm"
 import {ProjectEntity} from "./entity/project.entity"
@@ -19,6 +19,10 @@ export class ProjectService {
 
   getAllProjects(): string {
     return 'all projects'
+  }
+
+  async getProject(projectId: string): Promise<ProjectEntity> {
+    return await this.projectRepository.findOneBy({id: projectId})
   }
 
   async createProject({name, isPrivate, username}: ProjectDto): Promise<ProjectEntity> {
@@ -61,7 +65,18 @@ export class ProjectService {
     const projectDetail = await this.getProjectDetail(projectId)
     if (projectDetail) return projectDetail
     else {
-      const projectDetail = this.projectDetailRepository.create({projectId})
+      const project = await this.getProject(projectId)
+      if (!project) throw new HttpException({
+        message: 'Bad request.'
+      }, HttpStatus.BAD_REQUEST)
+
+      const projectDetail = this.projectDetailRepository.create({
+        name: project.name,
+        isPrivate: project.isPrivate,
+        modified: project.modified,
+        username: project.username,
+        projectId
+      })
       await this.projectDetailRepository.save(projectDetail)
       return projectDetail
     }
