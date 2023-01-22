@@ -39,8 +39,8 @@ onMounted(async () => {
   const projectDetail = await projectApi.getPublicProjectDetail(String(route.params['id']))
   data.value = projectDetail.data.data ? projectDetail.data.data : '[]'
   seoData.value = {
-    pageTitle: `DSM - Browse > ${projectDetail.data.name}`,
-    displayTitle: `Browse > ${projectDetail.data.name}`
+    pageTitle: `DSM - Browse ${projectDetail.data.name ? '> ' + projectDetail.data.name : ''}`,
+    displayTitle: `Browse ${projectDetail.data.name ? '> ' + projectDetail.data.name : ''}`
   }
   postGroups()
 })

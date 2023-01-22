@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center h-full">
     <Spinner v-if="loading"/>
     <div v-else
-         class="flex flex-col gap-4 text-slate-500 w-80">
+         class="flex flex-col gap-4 text-slate-500 w-80 h-3/6">
       <div class="flex flex-col gap-4 mb-4">
         <h3 class="text-2xl mb-1">Welcome</h3>
         <p class="text-sm mb-2">To save your create in server, you should sign in our website.</p>
