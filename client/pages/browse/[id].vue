@@ -1,7 +1,7 @@
 <template>
   <iframe ref="iframe"
           class="w-full h-full"
-          src="https://zabefofoon.github.io/dsm-embbedded/?save=true&public=true"
+          src="https://zabefofoon.github.io/dsm-embbedded"
           @load="postGroups"></iframe>
 </template>
 
