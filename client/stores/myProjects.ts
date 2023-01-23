@@ -26,10 +26,11 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     if (!isLastPage.value) await getMyProjects((meta.value?.currentPage || 0) + 1)
   }
 
-  const createProject = async (data: Partial<ProjectType>) => {
+  const createProject = async (data: Partial<ProjectType>): Promise<ProjectType> => {
     const response = await projectApi.createProject(data)
     if (!myProjects.value) myProjects.value = []
     myProjects.value.unshift(response.data)
+    return response.data
   }
 
   const updateProject = async (id: string, data: Partial<ProjectType>) => {

@@ -1,46 +1,66 @@
 <template>
-  <div class="project relative">
-    <div class="button-area absolute top-1 left-2 z-10 opacity-0">
-      <button class="text-xl text-slate-500"
-              @click="toggleMenu()">
-        <i class="icon icon-overflow"></i>
-      </button>
-    </div>
-    <div v-if="isShowMenu" class="absolute top-8 left-3 z-10">
-      <ul class="bg-white border shadow-sm  text-sm w-40"
-          v-click-away="() => toggleMenu()">
-        <slot name="menus">
-          <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
-              @click="select('config')">
-            <button>config</button>
-          </li>
-          <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
-              @click="select('delete')">
-            <button>delete</button>
-          </li>
-        </slot>
-      </ul>
-    </div>
-    <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
+  <transition>
+    <div class="project relative">
+      <div class="button-area absolute top-1 left-2 z-10 opacity-0">
+        <button class="text-xl text-slate-500"
+                @click="toggleMenu()">
+          <i class="icon icon-overflow"></i>
+        </button>
+      </div>
+      <div v-if="isShowMenu" class="absolute top-8 left-3 z-10">
+        <ul class="bg-white border shadow-sm  text-sm w-40"
+            v-click-away="() => toggleMenu()">
+          <slot name="menus">
+            <li v-if="project?.isPrivate"
+                class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+                @click="$emit('change-is-private', false);toggleMenu()">
+              <button>change public</button>
+            </li>
+            <li v-else
+                class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+                @click="$emit('change-is-private', true);toggleMenu()">
+              <button>change private</button>
+            </li>
+            <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+                @click="name.focus();toggleMenu()">
+              <button>rename</button>
+            </li>
+            <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+                @click="select('delete')">
+              <button>delete</button>
+            </li>
+          </slot>
+        </ul>
+      </div>
+
       <div class="relative card border shadow-md w-40">
-        <div v-if="project.isPrivate"
-             class="absolute top-0 right-0 p-2">
-          <i class="icon icon-lock text-slate-400"></i>
-        </div>
-        <div class="aspect-square flex items-center justify-center relative">
-          <div class="w-fit h-fit text-8xl text-slate-500">
-            <i class="icon icon-file"></i>
+        <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
+          <div v-if="project.isPrivate"
+               class="absolute top-0 right-0 p-2">
+            <i class="icon icon-lock text-slate-400"></i>
           </div>
-        </div>
+          <div class="aspect-square flex items-center justify-center relative">
+            <div class="w-fit h-fit text-8xl text-slate-500">
+              <i class="icon icon-file"></i>
+            </div>
+          </div>
+        </NuxtLink>
         <div class="flex flex-col gap-1 p-2 border border-x-0">
-          <p class="text-xs text-slate-500">{{ formatDate(project.modified) }}</p>
-          <input class="text-sm text-slate-800"
-                 :value="project.name"/>
-          <p v-if="!hideUsername" class="text-xs text-slate-500">{{ project.username }}</p>
+          <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
+            <p class="text-xs text-slate-500">{{ formatDate(project.modified) }}</p>
+          </NuxtLink>
+          <input ref="name"
+                 class="text-sm text-slate-800"
+                 :value="project.name"
+                 :readonly="public"
+                 @change="$emit('change-name', $event.target.value)"
+                 @keydown.enter="$event.target.blur()"/>
+          <p v-if="!hideUsername"
+             class="text-xs text-slate-500">{{ project.username }}</p>
         </div>
       </div>
-    </NuxtLink>
-  </div>
+    </div>
+  </transition>
 </template>
 
 <script setup lang="ts">
@@ -49,7 +69,7 @@ import {ProjectType} from "../../server/model/ProjectType"
 import {directive as vClickAway} from "vue3-click-away"
 import util from "../util/util"
 
-defineProps({
+const props = defineProps({
   project: Object as PropType<ProjectType>,
   public: Boolean,
   hideUsername: Boolean
@@ -60,7 +80,7 @@ const toggleMenu = (value?: boolean) => {
   isShowMenu.value = value !== undefined ? value : !isShowMenu.value
 }
 
-const emit = defineEmits(['config', 'delete'])
+const emit = defineEmits(['config', 'delete', 'change-name', 'change-is-private'])
 
 const select = (type: 'config' | 'delete') => {
   toggleMenu()
@@ -68,6 +88,13 @@ const select = (type: 'config' | 'delete') => {
 }
 
 const formatDate = util.formatDate
+
+const name = ref<HTMLInputElement>()
+
+defineExpose({
+  id: props.project?.id,
+  nameInput: name
+})
 
 </script>
 
