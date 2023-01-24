@@ -32,9 +32,16 @@ export class PublicProjectController {
   getAllProjects(@Req() req: Request,
                  @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
                  @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number = 10,): Promise<Pagination<ProjectEntity>> {
-    return this.projectService.paginate({page, limit}, true)
+    return this.projectService.getProjects({page, limit}, true)
   }
-
+b
+  @Get('/public/search')
+  searchProjects(@Req() req: Request,
+                 @Query('keyword', new DefaultValuePipe('')) keyword: string,
+                 @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+                 @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number = 10,): Promise<Pagination<ProjectEntity>> {
+    return this.projectService.searchProjects(keyword || '', {page, limit}, true)
+  }
 
   @Get('/public/:id')
   getProjectDetail(@Param('id') id: string): Promise<ProjectDetailEntity> {

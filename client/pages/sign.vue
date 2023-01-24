@@ -58,7 +58,8 @@
               class="text-xs text-red-500">{{ isFailSignedIn }}</span>
 
       </div>
-      <div v-if="signMode === 'UP'" class="border border-x-0 border-y-1 border-slate-300 py-4">
+      <div v-if="signMode === 'UP'"
+           class="border border-x-0 border-y-1 border-slate-300 py-4">
         <h3 class="mb-2">Warning</h3>
         <p class="text-sm">
           We are not responsible for security, so register a simple name and password.

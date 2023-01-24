@@ -1,13 +1,19 @@
 <template>
-  <div class="h-full">
+  <div class="min-h-full">
+    <div class="w-full flex py-2 px-4 sticky top-0 z-20 bg-white">
+      <Search :keyword="searchKeyword"
+              @focusin-input="setTransitionName('none')"
+              @change-input="search($event.target.value)"
+              @empty-input="emptySearchKeyword"/>
+    </div>
     <div class="p-4 flex flex-wrap gap-4">
       <template v-if="myProjects">
         <button class="self-center justify-self-center w-40 aspect-square
           border border-dashed flex flex-col items-center justify-center"
                 @click="createProject">
-        <span class="w-fit h-fit text-3xl text-slate-500">
-          <i class="icon icon-add"></i>
-        </span>
+          <span class="w-fit h-fit text-3xl text-slate-500">
+            <i class="icon icon-add"></i>
+          </span>
           <span class="text-slate-500 text-sm">New Project</span>
         </button>
         <TransitionGroup :name="transitionName">
@@ -71,6 +77,7 @@ import {useNavigationStore} from "~/stores/navigation"
 import {useMyProjectsStore} from "~/stores/myProjects"
 import {storeToRefs} from "pinia"
 import {useAuthStore} from "~/stores/auth"
+import Search from "~/components/Search.vue"
 
 const router = useRouter()
 
@@ -110,8 +117,8 @@ const navigationStore = useNavigationStore()
 navigationStore.showBackButton(false)
 
 const myProjectStore = useMyProjectsStore()
-const {isLastPage, myProjects} = storeToRefs(myProjectStore)
-onMounted(() => {
+const {isLastPage, myProjects, searchKeyword} = storeToRefs(myProjectStore)
+onMounted(async () => {
   if (!authStore.username) {
     alert('Only authorized users can use service.')
     return router.push('sign')
@@ -126,7 +133,7 @@ const deleteProjects = async (id: string, $event?: MouseEvent) => {
 }
 
 const createProject = async () => {
-  transitionName.value = 'v'
+  setTransitionName('v')
   const created = await myProjectStore.createProject({
     isPrivate: false,
     name: 'New Project'
@@ -149,12 +156,24 @@ const renameProject = (id: string) => {
   isShowContextmenu.value.show = false
 }
 
-const transitionName = ref('v')
+const transitionName = ref('none')
+const setTransitionName = (value: string) => {
+  transitionName.value = value
+}
 const getNextPage = () => {
-  transitionName.value = 'get-page'
+  setTransitionName('none')
   myProjectStore.getNextPage()
 }
 
+const search = (keyword: string) => {
+  myProjectStore.setSearchKeyword(keyword)
+  myProjectStore.searchMyProjects(keyword)
+}
+
+const emptySearchKeyword = () => {
+  myProjectStore.setSearchKeyword('')
+  myProjectStore.getMyProjects(1)
+}
 </script>
 
 <style scoped lang="scss">

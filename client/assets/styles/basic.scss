@@ -82,3 +82,15 @@
   -webkit-mask-image: url($src);
   mask-image: url($src);
 }
+
+.icon-search {
+  $src: 'https://api.iconify.design/material-symbols/search.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}
+
+.icon-close {
+  $src: 'https://api.iconify.design/material-symbols/close.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}

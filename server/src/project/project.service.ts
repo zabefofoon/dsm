@@ -2,7 +2,7 @@ import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {ProjectDto} from "./dto/project.dto"
 import {InjectRepository} from "@nestjs/typeorm"
 import {ProjectEntity} from "./entity/project.entity"
-import {Repository} from "typeorm"
+import {Like, Repository} from "typeorm"
 import {IPaginationOptions, paginate, Pagination,} from 'nestjs-typeorm-paginate';
 import {ProjectDetailEntity} from "./entity/projectDetail.entity"
 
@@ -43,7 +43,7 @@ export class ProjectService {
     await this.projectRepository.delete(ids)
   }
 
-  async paginate(options: IPaginationOptions, onlyPublic = false, username?: string): Promise<Pagination<ProjectEntity>> {
+  async getProjects(options: IPaginationOptions, onlyPublic = false, username?: string): Promise<Pagination<ProjectEntity>> {
     const queryBuilder = this.projectRepository.createQueryBuilder('c')
     queryBuilder.orderBy('c.modified', 'DESC'); // Or whatever you need to do
     onlyPublic
@@ -52,6 +52,30 @@ export class ProjectService {
 
 
     return paginate<ProjectEntity>(queryBuilder, options)
+  }
+
+  async searchProjects(keyword: string,
+                       options: IPaginationOptions,
+                       onlyPublic = false,
+                       username?: string) {
+
+    const where = onlyPublic
+        ? [
+          {name: Like(`%${keyword}%`), isPrivate: false},
+          {username: Like(`%${keyword}%`), isPrivate: false},
+        ]
+        : [{name: Like(`%${keyword}%`), username},]
+
+    return paginate<ProjectEntity>(
+        this.projectRepository,
+        options,
+        {
+          where,
+          order: {
+            modified: "DESC",
+            id: "DESC",
+          },
+        })
   }
 
   async copyProject(id: string, username: string): Promise<void> {

@@ -37,7 +37,18 @@ export class ProjectController {
     const accessToken = req.cookies['Authentication']
     const decodedAccessToken = this.jwtService.decode(accessToken)
     const username = decodedAccessToken['name']
-    return this.projectService.paginate({page, limit}, false, username)
+    return this.projectService.getProjects({page, limit}, false, username)
+  }
+
+  @Get('/search')
+  searchProjects(@Req() req: Request,
+                 @Query('keyword', new DefaultValuePipe('')) keyword: string,
+                 @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+                 @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number = 10,): Promise<Pagination<ProjectEntity>> {
+    const accessToken = req.cookies['Authentication']
+    const decodedAccessToken = this.jwtService.decode(accessToken)
+    const username = decodedAccessToken['name']
+    return this.projectService.searchProjects(keyword || '', {page, limit}, false, username)
   }
 
   @Post()

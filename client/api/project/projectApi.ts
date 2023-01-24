@@ -5,6 +5,11 @@ import {Pagination} from "../../../server/model/Pagination"
 import {AxiosResponse} from "axios"
 
 export default {
+  searchProjects: async (keyword: string, page: number, limit?: number): Promise<AxiosResponse<Pagination<ProjectType>>> => await apiClient
+      .get('/projects/search', {
+        params: {keyword, page, limit}
+      }),
+
   getAllProjects: async (page: number, limit?: number): Promise<AxiosResponse<Pagination<ProjectType>>> => await apiClient
       .get('/projects', {
         params: {page, limit}
@@ -27,6 +32,11 @@ export default {
 
   updateProjectDetail: (id: string, data: string): Promise<AxiosResponse<void>> => apiClient
       .put(`/projects/detail/${id}`, {data}),
+
+  searchPublicProjects: async (keyword: string, page: number, limit?: number): Promise<AxiosResponse<Pagination<ProjectType>>> => await apiClient
+      .get('/projects/public/search', {
+        params: {keyword, page, limit}
+      }),
 
   getAllPublicProjects: async (page: number, limit?: number): Promise<AxiosResponse<Pagination<ProjectType>>> => await apiClient
       .get('/projects/public', {

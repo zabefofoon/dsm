@@ -4,6 +4,10 @@ import {ProjectType} from "~/../server/model/ProjectType"
 import projectApi from "~/api/project/projectApi"
 
 export const useMyProjectsStore = defineStore('myProjects', () => {
+  const searchKeyword = ref('')
+  const setSearchKeyword = (value: string) => {
+    searchKeyword.value = value
+  }
   const myProjects = ref<ProjectType[]>()
 
   const meta = ref<PaginationMeta>()
@@ -16,6 +20,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
   }
 
   const getMyProjects = async (page: number, limit?: number) => {
+    if (page === 1) clear()
     if ((meta.value?.currentPage || 0) >= page) return
     const res = await projectApi.getAllProjects(page, limit)
     meta.value = res.data.meta
@@ -23,7 +28,9 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
   }
 
   const getNextPage = async () => {
-    if (!isLastPage.value) await getMyProjects((meta.value?.currentPage || 0) + 1)
+    if (!isLastPage.value) searchKeyword.value
+        ? await searchMyProjects(searchKeyword.value, (meta.value?.currentPage || 0) + 1)
+        : await getMyProjects((meta.value?.currentPage || 0) + 1)
   }
 
   const createProject = async (data: Partial<ProjectType>): Promise<ProjectType> => {
@@ -57,6 +64,14 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     myProjects.value = res.data.items
   }
 
+  const searchMyProjects = async (keyword: string, page = 1) => {
+    if (page === 1) clear()
+    if ((meta.value?.currentPage || 0) >= page) return
+    const res = await projectApi.searchProjects(keyword, page)
+    meta.value = res.data.meta
+    myProjects.value = [...myProjects.value || [], ...res.data.items]
+  }
+
   return {
     myProjects,
     meta,
@@ -68,6 +83,9 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
     deleteProjects,
     findProjectById,
     clear,
-    refreshMyProjects
+    refreshMyProjects,
+    searchMyProjects,
+    searchKeyword,
+    setSearchKeyword
   }
 })

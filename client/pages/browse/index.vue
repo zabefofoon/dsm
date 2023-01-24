@@ -1,5 +1,10 @@
 <template>
-  <div class="h-full">
+  <div class="min-h-full">
+    <div class="w-full flex py-2 px-4 sticky top-0 z-20 bg-white">
+      <Search :keyword="searchKeyword"
+              @change-input="search($event.target.value)"
+              @empty-input="emptySearchKeyword"/>
+    </div>
     <div class="p-4 flex flex-wrap gap-4">
       <template v-if="publicProjects">
         <div v-for="project in publicProjects"
@@ -88,13 +93,23 @@ const navigationStore = useNavigationStore()
 navigationStore.showBackButton(false)
 
 const publicProjectStore = usePublicProjectsStore()
-const {isLastPage, publicProjects} = storeToRefs(publicProjectStore)
+const {isLastPage, publicProjects, searchKeyword} = storeToRefs(publicProjectStore)
 
 const copy = async (projectId: string, $event?: MouseEvent) => {
   if ($event) toggleContextmenu($event)
   await projectApi.copyProject(projectId)
   await myProjectStore.refreshMyProjects()
   alert(`Copied the project. Check your project list.`)
+}
+
+const search = (keyword: string) => {
+  publicProjectStore.setSearchKeyword(keyword)
+  publicProjectStore.searchProjects(keyword)
+}
+
+const emptySearchKeyword = () => {
+  publicProjectStore.setSearchKeyword('')
+  publicProjectStore.getPublicProjects(1)
 }
 
 onMounted(() => {
