@@ -129,6 +129,7 @@ onMounted(async () => {
 const deleteProjects = async (id: string, $event?: MouseEvent) => {
   if ($event) toggleContextmenu($event)
   if (!confirm('Are you sure you want to delete?')) return
+  setTransitionName('v')
   await myProjectStore.deleteProjects([id])
 }
 

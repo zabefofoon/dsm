@@ -15,7 +15,7 @@ export const useMyProjectsStore = defineStore('myProjects', () => {
   const isLastPage = computed(() => ((meta.value?.totalPages || 0) - (meta.value?.currentPage || 0)) < 1)
 
   const clear = () => {
-    myProjects.value = []
+    myProjects.value = undefined
     meta.value = undefined
   }
 

@@ -10,7 +10,7 @@ export const usePublicProjectsStore = defineStore('publicProjects', () => {
   }
 
   const clear = () => {
-    publicProjects.value = []
+    publicProjects.value = undefined
     meta.value = undefined
   }
 
