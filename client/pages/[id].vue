@@ -2,6 +2,7 @@
   <iframe ref="iframe"
           class="w-full h-full"
           src="https://zabefofoon.github.io/dsm-embbedded/?save=true"
+          allow="clipboard-read; clipboard-write"
           @load="postGroups"></iframe>
 </template>
 
