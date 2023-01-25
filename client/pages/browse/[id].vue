@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import {definePageMeta, onMounted, ref, useRoute, useRouter, useState} from "#imports"
 import {SeoData} from "~/middleware/seo"
-import {useNavigationStore} from "~/stores/navigation"
-import projectApi from "~/api/project/projectApi"
+import {useNavigationStore} from "~/stores/navigation.store"
+import projectApi from "~/api/project/project.api"
 
 const router = useRouter()
 const route = useRoute()

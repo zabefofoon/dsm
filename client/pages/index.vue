@@ -73,10 +73,10 @@ import {ProjectType} from "../../server/model/ProjectType"
 import {computed, definePageMeta, onMounted, ref, useRouter} from "#imports"
 import {default as ProjectComponent} from "../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
-import {useNavigationStore} from "~/stores/navigation"
-import {useMyProjectsStore} from "~/stores/myProjects"
+import {useNavigationStore} from "~/stores/navigation.store"
+import {useMyProjectsStore} from "~/stores/myProjects.store"
 import {storeToRefs} from "pinia"
-import {useAuthStore} from "~/stores/auth"
+import {useAuthStore} from "~/stores/auth.store"
 import Search from "~/components/Search.vue"
 
 const router = useRouter()

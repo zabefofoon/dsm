@@ -26,10 +26,10 @@
   </nav>
 </template>
 <script setup lang="ts">
-import {useAuthStore} from "~/stores/auth"
+import {useAuthStore} from "~/stores/auth.store"
 import {useRouter} from "#imports"
-import authApi from "~/api/auth/authApi"
-import {useMyProjectsStore} from "~/stores/myProjects"
+import authApi from "~/api/auth/auth.api"
+import {useMyProjectsStore} from "~/stores/myProjects.store"
 import {storeToRefs} from "pinia"
 
 const router = useRouter()

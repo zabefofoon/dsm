@@ -74,8 +74,8 @@ import {definePageMeta, onMounted, useRouter, useState, watch} from "#imports"
 import {SeoData} from "~/middleware/seo"
 import {ref} from "vue"
 import {AuthType} from "~/../server/model/AuthType"
-import authApi from "~/api/auth/authApi"
-import {useAuthStore} from "~/stores/auth"
+import authApi from "~/api/auth/auth.api"
+import {useAuthStore} from "~/stores/auth.store"
 import {AxiosResponse} from "axios"
 
 const router = useRouter()

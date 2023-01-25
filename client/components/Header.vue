@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import {useRouter, useState} from "#imports"
 import {SeoData} from "~/middleware/seo"
-import {useNavigationStore} from "~/stores/navigation"
+import {useNavigationStore} from "~/stores/navigation.store"
 import {storeToRefs} from 'pinia'
 
 const router = useRouter()

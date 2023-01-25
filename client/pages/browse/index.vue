@@ -52,12 +52,12 @@ import {ProjectType} from "../../../server/model/ProjectType"
 import {definePageMeta, onMounted, ref} from "#imports"
 import {default as ProjectComponent} from "../../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
-import {useNavigationStore} from "~/stores/navigation"
+import {useNavigationStore} from "~/stores/navigation.store"
 import {storeToRefs} from "pinia"
-import {usePublicProjectsStore} from "~/stores/publicProjects"
-import projectApi from "~/api/project/projectApi"
-import {useMyProjectsStore} from "~/stores/myProjects"
-import {useAuthStore} from "~/stores/auth"
+import {usePublicProjectsStore} from "~/stores/publicProjects.store"
+import projectApi from "~/api/project/project.api"
+import {useMyProjectsStore} from "~/stores/myProjects.store"
+import {useAuthStore} from "~/stores/auth.store"
 
 
 definePageMeta({

@@ -1,7 +1,7 @@
 import {computed, defineStore, ref} from "#imports"
 import {PaginationMeta} from "~/../server/model/Pagination"
 import {ProjectType} from "~/../server/model/ProjectType"
-import projectApi from "~/api/project/projectApi"
+import projectApi from "~/api/project/project.api"
 
 export const usePublicProjectsStore = defineStore('publicProjects', () => {
   const searchKeyword = ref('')
