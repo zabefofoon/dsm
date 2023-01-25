@@ -11,6 +11,10 @@
         <ul class="bg-white border shadow-sm  text-sm w-40"
             v-click-away="() => toggleMenu()">
           <slot name="menus">
+            <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+                @click="$emit('copy');toggleMenu()">
+              <button>copy</button>
+            </li>
             <li v-if="project?.isPrivate"
                 class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
                 @click="$emit('change-is-private', false);toggleMenu()">

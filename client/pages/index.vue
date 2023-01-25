@@ -23,6 +23,7 @@
             <ProjectComponent ref="projectRef"
                               :project="project"
                               hide-username
+                              @copy="copy(project.id)"
                               @delete="deleteProjects(project.id)"
                               @change-name="updateProject(project.id, {name: $event})"
                               @change-is-private="updateProject(project.id, {isPrivate: $event})"/>
@@ -40,6 +41,10 @@
           class="fixed bg-white border w-48 z-10 shadow-md text-sm"
           :style="{top: `${isShowContextmenu.y}px`, left: `${isShowContextmenu.x}px`}"
           v-click-away="($event) => toggleContextmenu($event)">
+        <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
+            @click="copy(isShowContextmenu.id);toggleContextmenu($event)">
+          <button>copy</button>
+        </li>
         <li v-if="showingProjectInContextMenu?.isPrivate"
             class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
             @click="updateProject(isShowContextmenu.id, {isPrivate: false});toggleContextmenu($event)">
@@ -78,6 +83,7 @@ import {useMyProjectsStore} from "~/stores/myProjects.store"
 import {storeToRefs} from "pinia"
 import {useAuthStore} from "~/stores/auth.store"
 import Search from "~/components/Search.vue"
+import projectApi from "~/api/project/project.api"
 
 const router = useRouter()
 
@@ -174,6 +180,12 @@ const search = (keyword: string) => {
 const emptySearchKeyword = () => {
   myProjectStore.setSearchKeyword('')
   myProjectStore.getMyProjects(1)
+}
+
+const copy = async (projectId: string) => {
+  setTransitionName('v')
+  await projectApi.copyProject(projectId)
+  await myProjectStore.refreshMyProjects()
 }
 </script>
 
