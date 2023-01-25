@@ -12,7 +12,7 @@
          class="w-1/3 relative">
     </div>
     <h3 v-else
-        class="text-lg">
+        class="text-md">
       {{ seoData?.displayTitle }}
     </h3>
     <div class="ml-auto flex gap-3">

@@ -56,6 +56,12 @@ const signOut = async () => {
 
 <style lang="scss">
 .router-link-exact-active {
+  &:first-child {
+    button {
+      background: white !important;
+    }
+  }
+
   button {
     color: #1B98E0;
     background: #E8F1F2;

@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <input ref="input"
-           class="w-full bg-slate-200 px-4 py-1 rounded-full"
+           class="w-full bg-slate-100 px-4 py-1 rounded-full"
            :value="keyword"
            :placeholder="placeholder"
            @keyup.enter="$event.target.blur()"
