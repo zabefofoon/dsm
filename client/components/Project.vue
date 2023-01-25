@@ -7,7 +7,8 @@
           <i class="icon icon-overflow"></i>
         </button>
       </div>
-      <div v-if="isShowMenu" class="absolute top-8 left-3 z-10">
+      <div v-if="isShowMenu"
+           class="absolute top-8 left-3 z-10">
         <ul class="bg-white border shadow-sm  text-sm w-40"
             v-click-away="() => toggleMenu()">
           <slot name="menus">
@@ -18,12 +19,12 @@
             <li v-if="project?.isPrivate"
                 class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
                 @click="$emit('change-is-private', false);toggleMenu()">
-              <button>change public</button>
+              <button>public</button>
             </li>
             <li v-else
                 class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
                 @click="$emit('change-is-private', true);toggleMenu()">
-              <button>change private</button>
+              <button>private</button>
             </li>
             <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
                 @click="name.focus();toggleMenu()">

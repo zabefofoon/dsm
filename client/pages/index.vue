@@ -48,12 +48,12 @@
         <li v-if="showingProjectInContextMenu?.isPrivate"
             class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
             @click="updateProject(isShowContextmenu.id, {isPrivate: false});toggleContextmenu($event)">
-          <button>change public</button>
+          <button>public</button>
         </li>
         <li v-else
             class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
             @click="updateProject(isShowContextmenu.id, {isPrivate: true});toggleContextmenu($event)">
-          <button>change private</button>
+          <button>private</button>
         </li>
         <li class="py-1 px-2 hover:bg-slate-500 hover:text-white border divide-y cursor-pointer"
             @click="renameProject(isShowContextmenu.id)">
