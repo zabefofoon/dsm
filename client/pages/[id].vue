@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import {definePageMeta, onBeforeUnmount, onMounted, ref, useRoute, useRouter, useState} from "#imports"
 import {SeoData} from "~/middleware/seo"
-import {useNavigationStore} from "~/stores/navigation.store"
 import projectApi from "~/api/project/project.api"
 
 const router = useRouter()
@@ -54,10 +53,6 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => window.removeEventListener('message', updateProjectDetail))
-
-const navigationStore = useNavigationStore()
-navigationStore.showBackButton({href: '/'})
-
 </script>
 
 <style scoped>

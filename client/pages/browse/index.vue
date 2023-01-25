@@ -1,10 +1,12 @@
 <template>
   <div class="min-h-full">
-    <div class="w-full flex py-2 px-4 sticky top-0 z-20 bg-white">
-      <Search :keyword="searchKeyword"
+    <teleport v-if="mounted"
+              to="#search">
+      <Search placeholder="Browse"
+              :keyword="searchKeyword"
               @change-input="search($event.target.value)"
               @empty-input="emptySearchKeyword"/>
-    </div>
+    </teleport>
     <div class="p-4 flex flex-wrap gap-4">
       <template v-if="publicProjects">
         <div v-for="project in publicProjects"
@@ -52,7 +54,6 @@ import {ProjectType} from "../../../server/model/ProjectType"
 import {definePageMeta, onMounted, ref} from "#imports"
 import {default as ProjectComponent} from "../../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
-import {useNavigationStore} from "~/stores/navigation.store"
 import {storeToRefs} from "pinia"
 import {usePublicProjectsStore} from "~/stores/publicProjects.store"
 import projectApi from "~/api/project/project.api"
@@ -89,9 +90,6 @@ const authStore = useAuthStore()
 const {username} = storeToRefs(authStore)
 const myProjectStore = useMyProjectsStore()
 
-const navigationStore = useNavigationStore()
-navigationStore.showBackButton(false)
-
 const publicProjectStore = usePublicProjectsStore()
 const {isLastPage, publicProjects, searchKeyword} = storeToRefs(publicProjectStore)
 
@@ -112,7 +110,12 @@ const emptySearchKeyword = () => {
   publicProjectStore.getPublicProjects(1)
 }
 
+const mounted = ref(false)
+const setMounted = (value: boolean) => {
+  mounted.value = value
+}
 onMounted(() => {
+  setMounted(true)
   publicProjectStore.refreshPublicProjects()
 })
 

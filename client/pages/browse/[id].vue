@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import {definePageMeta, onMounted, ref, useRoute, useRouter, useState} from "#imports"
 import {SeoData} from "~/middleware/seo"
-import {useNavigationStore} from "~/stores/navigation.store"
 import projectApi from "~/api/project/project.api"
 
 const router = useRouter()
@@ -45,10 +44,6 @@ onMounted(async () => {
   }
   postGroups()
 })
-
-const navigationStore = useNavigationStore()
-navigationStore.showBackButton({href: '/'})
-
 </script>
 
 <style scoped>

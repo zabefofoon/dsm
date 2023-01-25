@@ -1,17 +1,18 @@
 <template>
-  <header class="py-2 pl-4 pr-8 border flex gap-4 items-center">
+  <header class="py-2 pl-2 pr-8 border flex gap-2 items-center">
     <figure class="flex items-center">
-      <button v-show="isShowBackButton"
-              class="flex items-center p-1"
-              @click="back(isShowBackButton?.href)">
+      <button v-show="!seoData?.searchable"
+              class="pl-4 flex items-center p-1"
+              @click="$router.back()">
         <i class="icon icon-arrow-left"></i>
       </button>
-      <img v-show="!isShowBackButton"
-           class="w-6"
-           alt="dsm"
-           src="@/assets/images/logo.png"/>
     </figure>
-    <h3 class="text-lg">
+    <div v-if="seoData?.searchable"
+         id="search"
+         class="w-1/3 relative">
+    </div>
+    <h3 v-else
+        class="text-lg">
       {{ seoData?.displayTitle }}
     </h3>
     <div class="ml-auto flex gap-3">
@@ -28,19 +29,9 @@
 <script setup lang="ts">
 import {useRouter, useState} from "#imports"
 import {SeoData} from "~/middleware/seo"
-import {useNavigationStore} from "~/stores/navigation.store"
-import {storeToRefs} from 'pinia'
 
 const router = useRouter()
 const seoData = useState<SeoData>('seoData')
-
-const navigationStore = useNavigationStore()
-const {isShowBackButton} = storeToRefs(navigationStore)
-
-const back = (path?: string) => path
-    ? router.replace({path})
-    : router.back()
-
 </script>
 
 <style scoped lang="scss">

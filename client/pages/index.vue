@@ -1,11 +1,12 @@
 <template>
   <div class="min-h-full">
-    <div class="w-full flex py-2 px-4 sticky top-0 z-20 bg-white">
-      <Search :keyword="searchKeyword"
-              @focusin-input="setTransitionName('none')"
+    <teleport v-if="mounted"
+              to="#search">
+      <Search placeholder="My Projects"
+              :keyword="searchKeyword"
               @change-input="search($event.target.value)"
               @empty-input="emptySearchKeyword"/>
-    </div>
+    </teleport>
     <div class="p-4 flex flex-wrap gap-4">
       <template v-if="myProjects">
         <button class="self-center justify-self-center w-40 aspect-square
@@ -78,7 +79,6 @@ import {ProjectType} from "../../server/model/ProjectType"
 import {computed, definePageMeta, onMounted, ref, useRouter} from "#imports"
 import {default as ProjectComponent} from "../components/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
-import {useNavigationStore} from "~/stores/navigation.store"
 import {useMyProjectsStore} from "~/stores/myProjects.store"
 import {storeToRefs} from "pinia"
 import {useAuthStore} from "~/stores/auth.store"
@@ -119,12 +119,14 @@ const toggleContextmenu = ({clientX, clientY}: MouseEvent, project?: ProjectType
     }
 }
 
-const navigationStore = useNavigationStore()
-navigationStore.showBackButton(false)
-
 const myProjectStore = useMyProjectsStore()
 const {isLastPage, myProjects, searchKeyword} = storeToRefs(myProjectStore)
+const mounted = ref(false)
+const setMounted = (value: boolean) => {
+  mounted.value = value
+}
 onMounted(async () => {
+  setMounted(true)
   if (!authStore.username) {
     alert('Only authorized users can use service.')
     return router.push('sign')
