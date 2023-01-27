@@ -1,7 +1,7 @@
 <template>
   <transition>
-    <div class="project relative">
-      <div class="button-area absolute top-1 left-2 z-10 opacity-0">
+    <div class="relative">
+      <div class="absolute top-1 left-2 z-10">
         <button class="text-xl text-slate-500"
                 @click="toggleMenu()">
           <i class="icon icon-overflow"></i>
@@ -38,7 +38,7 @@
         </ul>
       </div>
 
-      <div class="relative card border shadow-md w-40">
+      <div class="relative card border transition-shadow shadow-md hover:shadow-sm w-40">
         <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
           <div v-if="project.isPrivate"
                class="absolute top-0 right-0 p-2">
@@ -104,15 +104,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-.project {
-  &:hover {
-    .button-area {
-      opacity: 1;
-    }
 
-    .card {
-      box-shadow: 0 0 1px rgba(#1B98E0, 1);
-    }
-  }
-}
 </style>
