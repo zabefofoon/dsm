@@ -22,7 +22,7 @@ import {ProjectEntity} from "./entity/project.entity"
 import {JwtService} from "@nestjs/jwt"
 import {ProjectDetailEntity} from "./entity/projectDetail.entity"
 
-@Controller('projects')
+@Controller('/api/projects')
 @UseGuards(AuthGuard)
 export class ProjectController {
 

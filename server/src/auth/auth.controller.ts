@@ -5,7 +5,7 @@ import {AuthEntity} from "./entity/auth.entity"
 import {HttpExceptionFilter} from "../../filter/httpException.filter"
 import {Response} from "express"
 
-@Controller('auth')
+@Controller('/api/auth')
 @UseFilters(new HttpExceptionFilter())
 export class AuthController {
   constructor(private authService: AuthService) {

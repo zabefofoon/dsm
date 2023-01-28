@@ -3,10 +3,10 @@ import {AuthType} from "~/../server/model/AuthType"
 
 export default {
   signIn: (authData: AuthType) =>
-      apiClient.post('/auth/signIn', authData),
+      apiClient.post('/api/auth/signIn', authData),
 
   signUp: (authData: AuthType) =>
-      apiClient.post('/auth/signUp', authData),
+      apiClient.post('/api/auth/signUp', authData),
 
-  signOut: () => apiClient.get('/auth/signOut'),
+  signOut: () => apiClient.get('/api/auth/signOut'),
 }

@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex flex-col gap-3 w-auto p-2 border shrink-0">
+  <nav class="flex flex-row justify-around md:justify-start md:flex-col fixed bottom-0 w-screen md:w-auto md:relative gap-3 w-auto p-2 border shrink-0 bg-white z-20">
     <NuxtLink to="/">
       <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
         <img class="w-6"
