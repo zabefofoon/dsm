@@ -9,7 +9,7 @@
     </figure>
     <div v-if="seoData?.searchable"
          id="search"
-         class="w-1/3 relative">
+         class="w-full md:w-1/3 relative">
     </div>
     <h3 v-else
         class="text-md">

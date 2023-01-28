@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <div class="relative">
+    <div class="project relative md:w-40">
       <div class="absolute top-1 left-2 z-10">
         <button class="text-xl text-slate-500"
                 @click="toggleMenu()">
@@ -38,7 +38,7 @@
         </ul>
       </div>
 
-      <div class="relative card border transition-shadow shadow-md hover:shadow-sm w-40">
+      <div class="relative card border transition-shadow shadow-md hover:shadow-sm">
         <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
           <div v-if="project.isPrivate"
                class="absolute top-0 right-0 p-2">
@@ -85,9 +85,9 @@ const toggleMenu = (value?: boolean) => {
   isShowMenu.value = value !== undefined ? value : !isShowMenu.value
 }
 
-const emit = defineEmits(['config', 'delete', 'change-name', 'change-is-private'])
+const emit = defineEmits(['long-touch', 'delete', 'change-name', 'change-is-private'])
 
-const select = (type: 'config' | 'delete') => {
+const select = (type: 'delete') => {
   toggleMenu()
   emit(type)
 }
@@ -100,9 +100,10 @@ defineExpose({
   id: props.project?.id,
   nameInput: name
 })
-
 </script>
 
 <style scoped lang="scss">
-
+.project {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
 </style>

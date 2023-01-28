@@ -1,5 +1,5 @@
 <template>
-  <footer class="p-2 border mt-auto text-xs">
+  <footer class="p-2 border mt-auto text-xs hidden md:block">
     <div class="text-slate-400">DSM v0.0.1</div>
   </footer>
 </template>

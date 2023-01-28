@@ -7,9 +7,9 @@
               @change-input="search($event.target.value)"
               @empty-input="emptySearchKeyword"/>
     </teleport>
-    <div class="p-4 flex flex-wrap gap-4">
+    <div class="grid grid-cols-2 p-4 md:flex flex-wrap gap-x-2 gap-y-2 md:gap-4">
       <template v-if="myProjects">
-        <button class="self-center justify-self-center w-40 aspect-square
+        <button class="self-center justify-self-center w-full md:w-40 aspect-square
           border border-dashed flex flex-col items-center justify-center"
                 @click="createProject">
           <span class="w-fit h-fit text-3xl text-slate-500">
@@ -20,6 +20,7 @@
         <TransitionGroup :name="transitionName">
           <div v-for="project in myProjects"
                :key="project.id"
+               class="w-full md:w-fit"
                @contextmenu.prevent="toggleContextmenu($event, project)">
             <ProjectComponent ref="projectRef"
                               :project="project"
@@ -194,15 +195,22 @@ const copy = async (projectId: string) => {
 <style scoped lang="scss">
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 300ms ease, width 300ms ease, transform 300ms ease;
-  width: 10rem;
-  transform: translateY(0);
+
+  @media (min-width: 768px) {
+    transition: opacity 300ms ease, width 300ms ease, transform 300ms ease;
+    width: 10rem;
+    transform: translateY(0);
+  }
 }
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
-  width: 0;
-  transform: translateY(-10%);
+
+  @media (min-width: 768px) {
+    opacity: 0;
+    width: 0;
+    transform: translateY(-10%);
+  }
+
 }
 </style>

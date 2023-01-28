@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full h-full border overflow-auto">
+  <main class="w-full h-full border overflow-auto pb-16 md:pb-0">
     <slot/>
   </main>
 </template>

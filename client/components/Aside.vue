@@ -1,34 +1,47 @@
 <template>
-  <nav class="flex flex-row justify-around md:justify-start md:flex-col fixed bottom-0 w-screen md:w-auto md:relative gap-3 w-auto p-2 border shrink-0 bg-white z-20">
-    <NuxtLink to="/">
-      <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
+  <nav
+      class="flex flex-row justify-around md:justify-start md:flex-col
+      fixed bottom-0 w-full md:w-auto md:relative md:gap-3 w-auto md:p-2 border shrink-0 bg-white z-20">
+    <NuxtLink to="/" class="w-full md:w-fit flex justify-center md:inline">
+      <button
+          class="w-full md:w-fit flex items-center justify-center text-2xl py-2 md:p-1 md:border md:shadow-md md:rounded-full text-slate-400">
         <img class="w-6"
              alt="dsm"
              src="@/assets/images/logo.png"/>
       </button>
     </NuxtLink>
     <NuxtLink v-if="username"
+              class="w-full md:w-fit flex justify-center md:inline"
               to="/">
-      <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
+      <button
+          class="w-full md:w-fit flex items-center justify-center text-2xl py-2 md:p-1 md:border md:shadow-md md:rounded-full text-slate-400">
         <i class="icon icon-grid"></i>
       </button>
     </NuxtLink>
-    <NuxtLink to="/browse">
-      <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
+    <NuxtLink to="/browse"
+              class="w-full md:w-fit flex justify-center md:inline">
+      <button
+          class="w-full md:w-fit flex items-center justify-center text-2xl py-2 md:p-1 md:border md:shadow-md md:rounded-full text-slate-400">
         <i class="icon icon-explore"></i>
       </button>
     </NuxtLink>
     <NuxtLink v-if="!username"
-              to="/sign">
-      <button class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400">
+              to="/sign"
+              class="w-full md:w-fit flex justify-center md:inline">
+      <button
+          class="w-full md:w-fit flex items-center justify-center text-2xl py-2 md:p-1 md:border md:shadow-md md:rounded-full text-slate-400">
         <i class="icon icon-avatar-unsecured"></i>
       </button>
     </NuxtLink>
-    <button v-else
-            class="flex items-center justify-center text-2xl p-1 border shadow-md rounded-full text-slate-400"
-            @click="signOut">
+    <span v-else
+          class="w-full md:w-fit flex justify-center md:inline">
+      <button
+          class="w-full md:w-fit flex items-center justify-center text-2xl py-2 md:p-1 md:border md:shadow-md md:rounded-full-full text-slate-400"
+          @click="signOut">
       <i class="icon icon-avatar-secured"></i>
     </button>
+    </span>
+
   </nav>
 </template>
 <script setup lang="ts">

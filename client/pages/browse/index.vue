@@ -7,7 +7,7 @@
               @change-input="search($event.target.value)"
               @empty-input="emptySearchKeyword"/>
     </teleport>
-    <div class="p-4 flex flex-wrap gap-4">
+    <div class="grid grid-cols-2 p-4 md:flex flex-wrap gap-x-2 gap-y-2 md:gap-4">
       <template v-if="publicProjects">
         <div v-for="project in publicProjects"
              :key="project.id"
