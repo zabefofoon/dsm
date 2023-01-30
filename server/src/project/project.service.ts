@@ -35,6 +35,10 @@ export class ProjectService {
   async updateProject(id: string, project: ProjectDto): Promise<ProjectDto> {
     project.modified = new Date()
     await this.projectRepository.update({id}, project)
+    await this.projectDetailRepository.update({projectId: id}, {
+      name: project.name,
+      isPrivate: project.isPrivate
+    })
     return project
   }
 

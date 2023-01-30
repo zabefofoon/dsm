@@ -15,11 +15,11 @@
         class="text-md">
       {{ seoData?.displayTitle }}
     </h3>
-    <div class="ml-auto flex gap-3">
-      <button class="text-2xl text-slate-500">
+    <div class="ml-auto flex items-center gap-3">
+      <button class="text-2xl text-slate-500 flex items-center">
         <i class="icon icon-github"></i>
       </button>
-      <button class="text-2xl text-slate-500">
+      <button class="text-2xl text-slate-500 flex items-center">
         <i class="icon icon-instargram"></i>
       </button>
     </div>
