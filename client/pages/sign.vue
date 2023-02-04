@@ -112,7 +112,7 @@ const signIn = async () => {
   setLoading(false)
   if (String(result.status).startsWith('2')) {
     authStore.setName(authData.value.name)
-    setTimeout(() => router.push('/'))
+    setTimeout(() => router.push('/myProject'))
   }
 }
 

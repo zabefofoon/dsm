@@ -7,11 +7,11 @@
         <i class="icon icon-arrow-left"></i>
       </button>
     </figure>
-    <div v-if="seoData?.searchable"
+    <div v-show="seoData?.searchable"
          id="search"
          class="w-full md:w-1/3 relative">
     </div>
-    <h3 v-else
+    <h3 v-show="!seoData?.searchable"
         class="text-md">
       {{ seoData?.displayTitle }}
     </h3>

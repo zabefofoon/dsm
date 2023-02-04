@@ -39,7 +39,7 @@
       </div>
 
       <div class="relative card border transition-shadow shadow-md hover:shadow-sm">
-        <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
+        <NuxtLink :to="public ? `/browse/${project.id}` :`/myProject/${project.id}`">
           <div v-if="project.isPrivate"
                class="absolute top-0 right-0 p-2">
             <i class="icon icon-lock text-slate-400"></i>
@@ -51,7 +51,7 @@
           </div>
         </NuxtLink>
         <div class="flex flex-col gap-1 p-2 border border-x-0">
-          <NuxtLink :to="public ? `/browse/${project.id}` :`/${project.id}`">
+          <NuxtLink :to="public ? `/browse/${project.id}` :`/myProject/${project.id}`">
             <p class="text-xs text-slate-500">{{ formatDate(project.modified) }}</p>
           </NuxtLink>
           <input ref="name"
@@ -70,9 +70,9 @@
 
 <script setup lang="ts">
 import {PropType, ref} from 'vue'
-import {ProjectType} from "../../server/model/ProjectType"
+import {ProjectType} from "../../../server/model/ProjectType"
 import {directive as vClickAway} from "vue3-click-away"
-import util from "../util/util"
+import util from "../../util/util"
 
 const props = defineProps({
   project: Object as PropType<ProjectType>,

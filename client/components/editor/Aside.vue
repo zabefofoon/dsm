@@ -12,7 +12,7 @@
     </NuxtLink>
     <NuxtLink v-if="username"
               class="w-full md:w-fit flex justify-center md:inline"
-              to="/">
+              to="/myProject">
       <button
           class="w-full md:w-fit flex items-center justify-center text-2xl py-2 md:p-1 md:border md:shadow-md md:rounded-full text-slate-400">
         <i class="icon icon-grid"></i>

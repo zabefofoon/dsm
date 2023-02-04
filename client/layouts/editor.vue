@@ -13,10 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import Header from "~/components/Header.vue"
-import Aside from "~/components/Aside.vue"
-import Footer from "~/components/Footer.vue"
-import MainContent from "~/components/MainContent.vue"
+import Header from "~/components/editor/Header.vue"
+import Aside from "~/components/editor/Aside.vue"
+import Footer from "~/components/editor/Footer.vue"
+import MainContent from "~/components/editor/MainContent.vue"
 import {ModalsContainer} from 'vue-final-modal'</script>
 <style lang="scss" scoped>
 

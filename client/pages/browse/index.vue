@@ -52,14 +52,15 @@
 <script setup lang="ts">
 import {ProjectType} from "../../../server/model/ProjectType"
 import {definePageMeta, onMounted, ref} from "#imports"
-import {default as ProjectComponent} from "../../components/Project.vue"
+import {default as ProjectComponent} from "../../components/editor/Project.vue"
 import {directive as vClickAway} from "vue3-click-away"
 import {storeToRefs} from "pinia"
 import {usePublicProjectsStore} from "~/stores/publicProjects.store"
 import projectApi from "~/api/project/project.api"
 import {useMyProjectsStore} from "~/stores/myProjects.store"
 import {useAuthStore} from "~/stores/auth.store"
-
+import Search from "~/components/editor/Search.vue"
+import ProjectSkeletor from "~/components/editor/ProjectSkeletor.vue"
 
 definePageMeta({
   layout: 'editor',

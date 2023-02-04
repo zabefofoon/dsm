@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import {VueFinalModal} from 'vue-final-modal'
 import {ref, PropType} from "vue"
-import {ProjectType} from "../../server/model/ProjectType"
+import {ProjectType} from "../../../server/model/ProjectType"
 
 const props = defineProps({
   project: Object as PropType<ProjectType>
