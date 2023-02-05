@@ -1,5 +1,5 @@
 <template>
-  <header class="flex w-full header-bg fixed top-0 left-0 z-10 px-10 py-2">
+  <header class="flex w-full header-bg fixed top-0 left-0 z-20 px-8 py-3 shadow">
     <figure class="flex items-center gap-4 w-6">
       <router-link to="/">
         <img class="w-full"
@@ -7,13 +7,22 @@
              alt="dsm"/>
       </router-link>
     </figure>
-    <div class="ml-auto flex align-items-center gap-3 text-slate-500">
-      <button>Documentation</button>
-      <router-link to="/sign">
-        <button>Sign</button>
-      </router-link>
+    <button class="md:hidden flex items-center ml-auto text-slate-500"
+            @click="showNavigationModal">
+      <i class="icon icon-bars text-2xl"></i>
+    </button>
+    <div class="hidden md:flex ml-auto align-items-center gap-3 text-slate-500">
+      <button class="text-sm">Docs</button>
       <router-link to="/browse">
-        <button>Browse</button>
+        <button class="flex">Browse</button>
+      </router-link>
+      <router-link v-if="!username"
+                   to="/sign">
+        <button class="text-sm flex">Sign</button>
+      </router-link>
+      <router-link v-else
+                   to="/myProject">
+        <button class="text-sm flex">My Project</button>
       </router-link>
       <span>|</span>
       <button class="text-2xl text-slate-500 flex items-center">
@@ -27,6 +36,25 @@
 </template>
 
 <script setup lang="ts">
+import {useAuthStore} from "~/stores/auth.store"
+import {storeToRefs} from "pinia"
+import {$vfm} from "vue-final-modal"
+import ModalNavigation from "./ModalNavigation.vue"
+import {onMounted, onUnmounted} from "#imports"
+
+const authStore = useAuthStore()
+
+const {username} = storeToRefs(authStore)
+
+const showNavigationModal = () => {
+  $vfm.show({
+    component: ModalNavigation
+  })
+}
+
+onUnmounted(() => {
+  $vfm.hideAll()
+})
 
 </script>
 

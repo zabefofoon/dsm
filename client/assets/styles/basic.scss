@@ -94,3 +94,34 @@
   -webkit-mask-image: url($src);
   mask-image: url($src);
 }
+
+.icon-mouse-scroll {
+  $src: 'https://api.iconify.design/iconoir/mouse-scroll-wheel.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}
+
+.icon-arrow-top {
+  $src: 'https://api.iconify.design/ic/baseline-keyboard-arrow-up.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}
+
+.icon-arrow-top {
+  $src: 'https://api.iconify.design/ic/baseline-keyboard-arrow-up.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}
+
+.icon-arrow-bottom {
+  $src: 'https://api.iconify.design/ic/baseline-keyboard-arrow-down.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}
+
+
+.icon-bars {
+  $src: 'https://api.iconify.design/heroicons/bars-3-20-solid.svg';
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
+}

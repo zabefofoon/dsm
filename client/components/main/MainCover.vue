@@ -1,43 +1,22 @@
 <template>
-  <div class="bg-black w-screen h-screen relative overflow-hidden">
-    <div ref="imagesWrap" class="images-wrap h-full relative">
-      <div class="w-full h-full absolute top-0 left-0 bg-layer-1">
-        <picture>
-          <source srcset="@/assets/images/star_layer_1.png"
-                  media="(min-width: 768px)">
-          <img class="w-full h-full"
-               src="@/assets/images/m_star_layer_1.png"
-               alt=""/>
-        </picture>
-      </div>
-      <div class="w-full h-full absolute top-0 left-0 bg-layer-2">
-        <picture>
-          <source srcset="@/assets/images/star_layer_2.png"
-                  media="(min-width: 768px)">
-          <img class="w-full h-full"
-               src="@/assets/images/m_star_layer_2.png"
-               alt=""/>
-        </picture>
-      </div>
-      <div class="w-full h-full absolute top-0 left-0 bg-layer-3">
-        <picture>
-          <source srcset="@/assets/images/star_layer_3.png"
-                  media="(min-width: 768px)">
-          <img class="w-full h-full"
-               src="@/assets/images/m_star_layer_3.png"
-               alt=""/>
-        </picture>
-      </div>
-    </div>
-    <div class="w-full h-full bg-layer-2 absolute top-0 left-0"></div>
-    <div class="w-full h-full bg-layer-3 absolute top-0 left-0"></div>
-    <div class="absolute top-0 left-0 z-index-1 w-full h-full flex items-center justify-center">
-      <div class="flex flex-col gap-4 text-white">
-        <div class="text-5xl font-bold overflow-hidden">
-          <div class="slide-up">DSM</div>
+  <div class="w-screen bg-white h-screen relative overflow-hidden">
+    <div class="w-full h-full flex items-center justify-center p-5 md:p-20">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 flex items-center justify-center">
+          <img class="w-full"
+               alt="dsm_1"
+               src="@/assets/images/image_1.png"/>
         </div>
-        <div class="text-xl font-thin overflow-hidden">
-          <div class="slide-down">Css Storage Service</div>
+        <div class="text-xl md:text-4xl md:w-1/2 leading-snug text-slate-500">
+          With DSM, you can write HTML and CSS for each component separately,
+          preview your work, and see a list of all the components you've created.
+          <br/>
+          <router-link :to="username ? '/myProject' : '/sign'">
+            <button class="w-full md:w-fit flex justify-center items-center text-xl border border-slate-500 text-slate-500
+                hover:bg-blue-500 hover:text-white px-12 py-2 rounded-full mt-10">
+              <span>Get Start</span>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -45,12 +24,21 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue"
+import {useAuthStore} from "~/stores/auth.store"
+import {storeToRefs} from "pinia"
 
-const imagesWrap = ref<HTMLDivElement>()
+const authStore = useAuthStore()
+
+const {username} = storeToRefs(authStore)
+
 </script>
 
 <style scoped lang="scss">
+
+.title {
+  font-size: 72px;
+}
+
 .images-wrap {
   transform-origin: bottom;
 }

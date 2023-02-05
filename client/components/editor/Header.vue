@@ -12,7 +12,7 @@
          class="w-full md:w-1/3 relative">
     </div>
     <h3 v-show="!seoData?.searchable"
-        class="text-md">
+        class="text-md whitespace-nowrap truncate">
       {{ seoData?.displayTitle }}
     </h3>
     <div class="ml-auto flex items-center gap-3">
